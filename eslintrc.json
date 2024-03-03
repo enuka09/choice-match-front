@@ -1,0 +1,91 @@
+{
+  "extends": ["react-app", "react-app/jest", "plugin:import/typescript", "plugin:prettier/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prefer-const": "error",
+    "no-var": "warn",
+    "no-unused-vars": "warn",
+    "no-use-before-define": "error",
+    "no-console": "warn",
+    "no-unused-expressions": "warn",
+    "camelcase": "warn",
+    "quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "@typescript-eslint/quotes": [
+      "error",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "react/jsx-uses-react": ["off"],
+    "react/react-in-jsx-scope": ["off"],
+    "react/function-component-definition": ["off"],
+    "react/jsx-props-no-spreading": ["warn"],
+    "react/prop-types": ["off"],
+    "react/require-default-props": ["off"],
+    "class-methods-use-this": ["off"],
+    "no-new": "off",
+    "no-shadow": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "@typescript-eslint/no-require-imports": ["error"],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*setupTests.ts", "**/*.d.ts", "**/*.stories.tsx", "**/*.test.ts", "**/.projenrc.ts"]
+      }
+    ],
+    "no-duplicate-imports": ["error"],
+    "@typescript-eslint/no-shadow": ["error"],
+    "key-spacing": ["error"],
+    "no-multiple-empty-lines": ["error"],
+    "no-return-await": ["off"],
+    "@typescript-eslint/return-await": ["error"],
+    "no-trailing-spaces": ["error"],
+    "dot-notation": ["error"],
+    "no-bitwise": ["error"],
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": [
+          "public-static-field",
+          "public-static-method",
+          "protected-static-field",
+          "protected-static-method",
+          "private-static-field",
+          "private-static-method",
+          "field",
+          "constructor",
+          "method"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
+}
