@@ -78,7 +78,7 @@ const Header: React.FC = () => {
               Track My Order
             </button>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Icon */}
             <div className="flex flex-col items-center justify-center lg:hidden" title="name" onClick={toggleNavMenu}>
               <Bars3Icon className="block h-8 w-8 rounded-md border-2 border-white text-white lg:hidden" />
             </div>
@@ -88,47 +88,25 @@ const Header: React.FC = () => {
 
         {/* Navbar */}
         <nav className="relative z-10 hidden bg-neutral-500 py-2 text-sm font-semibold text-neutral-300 shadow-lg lg:block lg:text-base">
-          <div className="mx-20 flex items-center space-x-10 py-1 xl:space-x-20">
+          <div className="mx-20 flex items-center space-x-10 py-1 capitalize xl:space-x-20">
             <Link to="/">Home</Link>
-            {/* <div className="dropdown">
-              <button className="dropbtn">Women</button>
-              <div className="dropdown-content">
-               
-              </div>
-            </div> */}
-            <Dropdown
-              trigger={<Link to="">Women</Link>} // Use the Link component as the trigger
-              options={["Option 1", "Option 2", "Option 3"]} // Options for the dropdown menu
-            />
-
-            <div className="dropdown">
-              <button className="dropbtn">Men</button>
-              <div className="dropdown-content">
-                {/* <Link to="">Category 4</Link>
-                <Link to="">Category 5</Link>
-                <Link to="">Category 6</Link> */}
-              </div>
-            </div>
-            <div className="dropdown">
-              <button className="dropbtn">Kids</button>
-              <div className="dropdown-content">
-                {/* <Link to="">Category 1</Link>
-                <Link to="">Category 2</Link>
-                <Link to="">Category 3</Link> */}
-              </div>
-            </div>
+            <Dropdown trigger={<Link to="">women</Link>} options={["Option 1", "Option 2", "Option 3"]} />
+            <Dropdown trigger={<Link to="">men</Link>} options={["Option 4", "Option 5", "Option 6"]} />
+            <Dropdown trigger={<Link to="">kids</Link>} options={["Option 7", "Option 8", "Option 9"]} />
             <Link to="">New-In</Link>
             <Link to="">Deals</Link>
             <Link to="">Competitions</Link>
-            <button className="rounded-sm px-3 py-2 text-primary-700 outline outline-primary-300 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white">
-              AI-Fashion Recommender
-            </button>
+            <Link to="">
+              <button className="rounded-sm px-3 py-2 text-primary-700 outline outline-primary-300 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white">
+                AI-Fashion Recommender
+              </button>
+            </Link>
           </div>
         </nav>
       </div>
       {/* Navbar ends here */}
 
-      {/* Top Navbar Mobile View */}
+      {/* Top Navbar - Mobile View */}
       <nav
         className={`fixed left-0 top-0 h-screen w-full bg-primary-700 text-white lg:hidden ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -146,7 +124,6 @@ const Header: React.FC = () => {
             </div>
             <div className="my-3 h-px border-none bg-neutral-500 opacity-25" />
           </div>
-
           <div className="mx-8 mb-10 flex flex-col md:mx-10">
             {headerLinks.map((link, index) => (
               <div key={index}>
@@ -191,15 +168,17 @@ const Header: React.FC = () => {
                 )}
               </div>
             ))}
-            <button className="text-primary-white mt-10 rounded-sm bg-primary-100 px-1 py-2 text-sm font-medium capitalize tracking-widest">
-              AI-Fashion Recommender
-            </button>
+            <Link to="">
+              <button className="text-primary-white mt-10 rounded-sm bg-primary-100 px-3 py-2 text-sm font-medium capitalize tracking-widest">
+                AI-Fashion Recommender
+              </button>
+            </Link>
           </div>
         </div>
       </nav>
-      {/* Top Navbar Mobile View ends here */}
+      {/* Top Navbar - Mobile View ends here */}
 
-      {/* Bottom Navbar Mobile View */}
+      {/* Bottom Navbar - Mobile View */}
       <div className=" fixed bottom-0 flex h-16 w-full bg-primary-300 py-2 lg:hidden">
         <div className="flex w-full items-center justify-between text-white sm-max:px-3 md:px-24">
           <Link to={""} className="mx-2">
@@ -215,10 +194,7 @@ const Header: React.FC = () => {
           </div>
 
           <button className="mx-2 border-none bg-transparent">
-            {/* <div className="relative inline-block"> */}
             <SolidShoppingCartIcon className="h-6 w-6" />
-            {/* <span className="cart-badge absolute right-0 top-0 rounded-full bg-red-500 px-1 text-white">5</span> */}
-            {/* </div> */}
           </button>
           <Link to={""} className="mx-2">
             <SolidHeartIcon className="h-6 w-6" />

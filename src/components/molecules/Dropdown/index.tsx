@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { DropdownProps } from "./types/interface";
+import { Link } from "react-router-dom";
 
 const Dropdown: React.FC<DropdownProps> = ({ trigger, options }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -31,9 +32,9 @@ const Dropdown: React.FC<DropdownProps> = ({ trigger, options }) => {
           <ul className="py-2 text-sm text-neutral-300 " aria-labelledby="dropdownHoverButton">
             {options.map((option, index) => (
               <li key={index}>
-                <a href="#" className=":hover:text-white block px-4 py-2 hover:bg-neutral-100">
+                <Link to="#" className=":hover:text-white block px-4 py-2 hover:bg-neutral-100">
                   {option}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
