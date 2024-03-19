@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ExpandMore } from "@mui/icons-material";
 import { DropdownProps } from "./types/interface";
 import { Link } from "react-router-dom";
 
@@ -16,9 +16,9 @@ const Dropdown: React.FC<DropdownProps> = ({ trigger, options }) => {
 
   return (
     <div className="relative inline-block text-left" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
         {trigger}
-        <ChevronDownIcon className={`ml-2 h-3.5 w-3.5 transform ${isOpen ? "rotate-180" : ""}`} />
+        <ExpandMore fontSize="small" className={`ml-2 h-3.5 w-3.5 transform ${isOpen ? "rotate-180" : ""}`} />
       </div>
       {/* Dropdown menu */}
       {isOpen && (
@@ -32,7 +32,7 @@ const Dropdown: React.FC<DropdownProps> = ({ trigger, options }) => {
           <ul className="py-2 text-sm text-neutral-300 " aria-labelledby="dropdownHoverButton">
             {options.map((option, index) => (
               <li key={index}>
-                <Link to="#" className=":hover:text-white block px-4 py-2 hover:bg-neutral-100">
+                <Link to="/" className=":hover:text-white block px-4 py-2 hover:bg-neutral-100">
                   {option}
                 </Link>
               </li>

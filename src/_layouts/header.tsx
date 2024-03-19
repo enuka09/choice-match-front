@@ -1,20 +1,18 @@
 import React, { useState } from "react";
+import * as styles from "./styles";
 import {
-  Bars3Icon,
-  XMarkIcon,
-  MagnifyingGlassIcon,
-  UserIcon,
-  HeartIcon,
-  ShoppingCartIcon,
-  ChevronUpIcon,
-} from "@heroicons/react/24/outline";
-import {
-  MagnifyingGlassCircleIcon,
-  HomeIcon,
-  UserIcon as SolidUserIcon,
-  HeartIcon as SolidHeartIcon,
-  ShoppingCartIcon as SolidShoppingCartIcon,
-} from "@heroicons/react/24/solid";
+  SearchRounded,
+  ShoppingCartOutlined,
+  FavoriteBorderOutlined,
+  PersonOutlineOutlined,
+  Menu,
+  Close,
+  ExpandLess,
+  HomeRounded,
+  ShoppingCart,
+  Favorite,
+  PersonRounded,
+} from "@mui/icons-material";
 import Logo from "../assests/main_logo.png";
 import { Link } from "react-router-dom";
 import { headerLinks } from "./data/navBarLinks";
@@ -34,7 +32,7 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Top Header */}
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-1 bg-primary-300 p-3 py-2 text-center text-xs font-normal tracking-widest text-white sm:text-xs md:flex-row md:space-x-1 md:space-y-0 lg:text-base">
+      <div className={styles.topHeader.container}>
         <p>
           Shop, Smile, Repeat. Discover your style with AI-Powered Fashion! Enjoy free delivery on orders over LKR
           7500/-
@@ -43,63 +41,57 @@ const Header: React.FC = () => {
       {/* Top Header ends here ... */}
 
       {/* Main Header */}
-      <div className="sticky left-0 top-0 z-40 shadow-lg lg:shadow-none">
-        <div className="header relative z-10 flex h-16 w-full items-center justify-between space-x-6 bg-primary-700 sm-max:px-3 md:px-8 lg:h-90 lg:px-20">
-          <div className="flex items-center space-x-3">
-            <a href="/" className="logo">
-              <img src={Logo} alt="Logo" className="h-auto xs:max-w-44 lg:max-w-60" />
-            </a>
+      <div className={styles.mainHeader.headerNavbarContainer}>
+        <div className={styles.mainHeader.container}>
+          <div className={styles.mainHeader.logoContainer}>
+            <Link to="/">
+              <img src={Logo} alt="Logo" className={styles.mainHeader.logo} />
+            </Link>
           </div>
-          <nav className="hidden items-center lg:flex">
-            <div className="menu_container relative">
-              <div className="flex items-center">
+          <nav className={styles.mainHeader.searchOuter}>
+            <div className={styles.mainHeader.searchInner}>
+              <div className={styles.mainHeader.searchInput}>
                 <input
                   type="text"
                   placeholder="Search for the perfect outfit here..."
-                  className="h-10 rounded-bl-sm rounded-tl-sm border px-4 py-2 font-medium focus:outline-none lg:w-64 cs-1300:w-96"
+                  className={styles.mainHeader.searchInputField}
                 />
-                <button className="h-10 rounded-br-sm rounded-tr-sm bg-primary-100 px-5 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-primary-300">
-                  <MagnifyingGlassIcon className="h-6 w-6" />
+                <button className={styles.mainHeader.searchButton}>
+                  <SearchRounded />
                 </button>
               </div>
             </div>
           </nav>
-          <div className="flex items-center text-sm font-semibold capitalize tracking-wide lg:space-x-4 cs-1300:space-x-8">
-            <div className="hidden cursor-pointer lg:block" title="Cart" aria-label="Cart">
-              <ShoppingCartIcon className="h-6 w-6 text-white" />
+          <div className={styles.mainHeader.iconsContainer}>
+            <div className={styles.mainHeader.icon} title="Cart">
+              <ShoppingCartOutlined />
             </div>
-            <div className="hidden cursor-pointer lg:block" title="Wishlist">
-              <HeartIcon className="h-6 w-6 text-white" />
+            <div className={styles.mainHeader.icon} title="Wishlist">
+              <FavoriteBorderOutlined />
             </div>
-            <div className="hidden cursor-pointer lg:block" title="Profile">
-              <UserIcon className="h-6 w-6 text-white" />
+            <div className={styles.mainHeader.icon} title="Profile">
+              <PersonOutlineOutlined />
             </div>
-            <button className="hidden rounded-sm bg-white text-primary-700 md:px-2 md:py-1 md:text-sm lg:block">
-              Track My Order
-            </button>
-
-            {/* Mobile Menu Icon */}
-            <div className="flex flex-col items-center justify-center lg:hidden" title="name" onClick={toggleNavMenu}>
-              <Bars3Icon className="block h-8 w-8 rounded-md border-2 border-white text-white lg:hidden" />
+            <button className={styles.mainHeader.trackOrderBtn}>Track My Order</button>
+            <div className={styles.mainHeader.mobileMenuIconContainer} title="menu" onClick={toggleNavMenu}>
+              <Menu fontSize="large" className={styles.mainHeader.mobileMenuIcon} />
             </div>
           </div>
         </div>
         {/* Main Header ends here */}
 
         {/* Navbar */}
-        <nav className="relative z-10 hidden bg-neutral-500 py-2 text-sm font-semibold text-neutral-300 shadow-lg lg:block lg:text-base">
-          <div className="mx-20 flex items-center space-x-10 py-1 capitalize xl:space-x-20">
+        <nav className={styles.navbar.outer}>
+          <div className={styles.navbar.inner}>
             <Link to="/">Home</Link>
-            <Dropdown trigger={<Link to="">women</Link>} options={["Option 1", "Option 2", "Option 3"]} />
-            <Dropdown trigger={<Link to="">men</Link>} options={["Option 4", "Option 5", "Option 6"]} />
-            <Dropdown trigger={<Link to="">kids</Link>} options={["Option 7", "Option 8", "Option 9"]} />
-            <Link to="">New-In</Link>
-            <Link to="">Deals</Link>
-            <Link to="">Competitions</Link>
-            <Link to="">
-              <button className="rounded-sm px-3 py-2 text-primary-700 outline outline-primary-300 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white">
-                AI-Fashion Recommender
-              </button>
+            <Dropdown trigger={<Link to="/">women</Link>} options={["Option 1", "Option 2", "Option 3"]} />
+            <Dropdown trigger={<Link to="/">men</Link>} options={["Option 4", "Option 5", "Option 6"]} />
+            <Dropdown trigger={<Link to="/">kids</Link>} options={["Option 7", "Option 8", "Option 9"]} />
+            <Link to="/">New-In</Link>
+            <Link to="/">Deals</Link>
+            <Link to="/">Competitions</Link>
+            <Link to="/">
+              <button className={styles.navbar.recommendationBtn}>AI-Fashion Recommender</button>
             </Link>
           </div>
         </nav>
@@ -112,25 +104,25 @@ const Header: React.FC = () => {
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } z-50 overflow-hidden transition-transform duration-300 ease-in-out`}
       >
-        <div className="h-full overflow-auto">
-          <div className="sticky top-0 z-40">
-            <div className="flex items-center justify-between space-x-6 px-6 pt-3">
+        <div className={styles.topNavbarMobile.container}>
+          <div className={styles.topNavbarMobile.navHeader}>
+            <div className={styles.topNavbarMobile.menuIconContainer}>
               <div>
-                <span className="text-xl font-bold capitalize tracking-widest">menu</span>
+                <span className={styles.topNavbarMobile.menuText}>menu</span>
               </div>
-              <div className="cursor-pointer" onClick={toggleNavMenu}>
-                <XMarkIcon className="h-6 w-6 text-white" />
+              <div className={styles.topNavbarMobile.closeBtn} onClick={toggleNavMenu}>
+                <Close />
               </div>
             </div>
-            <div className="my-3 h-px border-none bg-neutral-500 opacity-25" />
+            <div className={styles.topNavbarMobile.subMenuContainer} />
           </div>
-          <div className="mx-8 mb-10 flex flex-col md:mx-10">
+          <div className={styles.topNavbarMobile.navLinksContainer}>
             {headerLinks.map((link, index) => (
               <div key={index}>
-                <div className="mt-6 flex items-center justify-between text-sm font-medium capitalize tracking-widest">
+                <div className={styles.topNavbarMobile.linkContainer}>
                   <Link
                     to={link.navigation}
-                    className="flex items-center space-x-3"
+                    className={styles.topNavbarMobile.link}
                     onClick={() => toggleSubMenu(link)}
                   >
                     <span>{link.title}</span>
@@ -140,7 +132,7 @@ const Header: React.FC = () => {
                       className={`h-[5px] transform duration-300 ${openSubMenu === link ? "rotate-0" : "rotate-180"}`}
                       onClick={() => toggleSubMenu(link)}
                     >
-                      <ChevronUpIcon className="h-4 w-4 text-white" />
+                      <ExpandLess fontSize="small" className="text-white" />
                     </div>
                   )}
                 </div>
@@ -151,13 +143,10 @@ const Header: React.FC = () => {
                     }`}
                   >
                     {link.subLinks.map((subLink, subIndex) => (
-                      <div
-                        key={subIndex}
-                        className="flex items-center justify-between py-3 text-sm capitalize tracking-wide"
-                      >
-                        <div className="flex items-center">
-                          <span className="inline-block h-0.5 w-8 bg-neutral-500 opacity-25"></span>
-                          <span className="inline-block h-1.5 w-1.5 bg-neutral-500 opacity-25"></span>
+                      <div key={subIndex} className={styles.topNavbarMobile.subLinkContainer}>
+                        <div className={styles.topNavbarMobile.subLink}>
+                          <span className={styles.topNavbarMobile.subLinkDot}></span>
+                          <span className={styles.topNavbarMobile.subLinkLine}></span>
                           <Link to={subLink.navigation} className="pl-2">
                             {subLink.title}
                           </Link>
@@ -168,10 +157,8 @@ const Header: React.FC = () => {
                 )}
               </div>
             ))}
-            <Link to="">
-              <button className="text-primary-white mt-10 rounded-sm bg-primary-100 px-3 py-2 text-sm font-medium capitalize tracking-widest">
-                AI-Fashion Recommender
-              </button>
+            <Link to="/">
+              <button className={styles.topNavbarMobile.recommendationButton}>AI-Fashion Recommender</button>
             </Link>
           </div>
         </div>
@@ -179,25 +166,25 @@ const Header: React.FC = () => {
       {/* Top Navbar - Mobile View ends here */}
 
       {/* Bottom Navbar - Mobile View */}
-      <div className=" fixed bottom-0 flex h-16 w-full bg-primary-300 py-2 lg:hidden">
-        <div className="flex w-full items-center justify-between text-white sm-max:px-3 md:px-24">
-          <Link to={""} className="mx-2">
-            <MagnifyingGlassCircleIcon className="h-6 w-6" />
+      <div className={styles.bottomNavbarMobile.outer}>
+        <div className={styles.bottomNavbarMobile.inner}>
+          <Link to={"/"} className="mx-2">
+            <SearchRounded />
           </Link>
-          <Link to={""}>
-            <SolidUserIcon className="h-6 w-6" />
+          <Link to={"/"}>
+            <PersonRounded />
           </Link>
-          <div className="mb-10 flex h-9 w-9 items-center justify-center rounded-full border-2 bg-primary-300 p-7">
-            <Link to={""}>
-              <HomeIcon className="h-6 w-6" />
+          <div className={styles.bottomNavbarMobile.homeBtnContainer}>
+            <Link to={"/"}>
+              <HomeRounded style={{ fontSize: "30px" }} />
             </Link>
           </div>
 
-          <button className="mx-2 border-none bg-transparent">
-            <SolidShoppingCartIcon className="h-6 w-6" />
+          <button className={styles.bottomNavbarMobile.cartBtn}>
+            <ShoppingCart />
           </button>
-          <Link to={""} className="mx-2">
-            <SolidHeartIcon className="h-6 w-6" />
+          <Link to={"/"} className="mx-2">
+            <Favorite />
           </Link>
         </div>
       </div>

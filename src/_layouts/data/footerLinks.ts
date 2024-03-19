@@ -3,49 +3,49 @@ import { IFooterLink } from "../types";
 export const MenuLinks: IFooterLink[] = [
   {
     title: "Women Series",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Men Series",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Kids Collection",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "New-In",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Competition",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Deals",
-    navigation: "#",
+    navigation: "/",
   },
 ];
 
 export const InformationLinks: IFooterLink[] = [
   {
     title: "About us",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Privacy Policy",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Terms and Condition",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "Delivery Details",
-    navigation: "#",
+    navigation: "/",
   },
   {
     title: "FAQs",
-    navigation: "#",
+    navigation: "/",
   },
 ];
