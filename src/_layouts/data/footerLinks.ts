@@ -19,7 +19,7 @@ export const MenuLinks: IFooterLink[] = [
   },
   {
     title: "Competition",
-    navigation: "/",
+    navigation: "/outfit-competition",
   },
   {
     title: "Deals",

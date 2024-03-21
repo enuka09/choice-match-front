@@ -5,7 +5,7 @@ export const topHeader = {
 };
 
 export const mainHeader = {
-  headerNavbarContainer: "sticky left-0 top-0 z-40 shadow-lg lg:shadow-none",
+  headerNavbarContainer: "sticky left-0 top-0 z-10 shadow-lg lg:shadow-none",
   container:
     "header relative z-10 flex h-16 w-full items-center justify-between space-x-6 bg-primary-700 sm-max:px-3 md:px-8 lg:h-90 lg:px-20",
   logoContainer: "flex items-center space-x-3",
@@ -25,8 +25,7 @@ export const mainHeader = {
 };
 
 export const navbar = {
-  outer:
-    "relative z-10 hidden bg-neutral-500 py-2 text-sm font-semibold text-neutral-300 shadow-lg lg:block lg:text-base",
+  outer: "relative hidden bg-neutral-500 py-2 text-sm font-semibold text-neutral-300 shadow-lg lg:block lg:text-base",
   inner: "mx-20 flex items-center space-x-10 py-1 capitalize xl:space-x-20",
   recommendationBtn:
     "rounded-sm px-3 py-2 text-primary-700 outline outline-primary-300 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white",
