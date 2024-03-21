@@ -14,6 +14,7 @@ module.exports = {
         "neutral-400": "#efeeee",
         "neutral-500": "#F8F9FA",
         "neutral-600": "#F9FAFB",
+        "neutral-700": "#D7D6D6",
         "yellow-100": "#FCD53F",
       },
       fontFamily: {
@@ -21,6 +22,9 @@ module.exports = {
       },
       height: {
         90: "90px",
+      },
+      fontSize: {
+        13: "13px",
       },
     },
     screens: {

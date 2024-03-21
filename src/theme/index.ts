@@ -23,3 +23,20 @@ export const section = {
   title:
     "mb-7 text-[1.1rem] lg:text-[2rem] font-semibold uppercase sm:text-[1.2rem] md:text-[1.5rem] lg:mb-10 font-serif tracking-[2px]",
 };
+
+export const form = {
+  input:
+    "rounded-sm border px-4 py-2 text-center transition duration-300 ease-in-out focus:border-primary-100 focus:outline-none",
+  button:
+    "rounded-sm bg-primary-100 px-4 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-primary-300 focus:outline-none",
+};
+
+export const drawer = {
+  backgroundBlur: "pointer-events-none fixed inset-0 z-20",
+  container: "bg-white",
+  menuSection: "flex border-b p-4",
+  menuTopic: "text-lg font-semibold",
+  menuButton: "absolute right-4 top-4 text-gray-400 hover:text-primary-700",
+  contentContainer: "px-4",
+  inner: "flex flex-col items-center justify-center",
+};
