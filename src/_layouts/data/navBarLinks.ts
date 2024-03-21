@@ -43,14 +43,19 @@ export const headerLinks: IMainMenu[] = [
   },
   {
     title: "New-In",
-    navigation: "/",
+    navigation: "/new-arrivals",
   },
   {
     title: "Deals",
-    navigation: "/",
+    navigation: "/deals",
   },
   {
     title: "Competitions",
-    navigation: "/",
+    navigation: "/outfit-competition",
+  },
+  {
+    title: "AI-Fashion Recommender",
+    navigation: "/fashion-recommender",
+    isRecommendationButton: true,
   },
 ];

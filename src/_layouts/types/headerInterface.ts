@@ -7,4 +7,5 @@ export interface IMainMenu {
   title: string;
   navigation: string;
   subLinks?: ISubMenu[];
+  isRecommendationButton?: boolean;
 }
