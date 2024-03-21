@@ -94,7 +94,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBrandIndex(prevIndex => (prevIndex === brandUrls.length - 1 ? 0 : prevIndex + 1));
-    }, 3000); // Change brand every 5 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [brandUrls]);
@@ -146,7 +146,7 @@ const Home = () => {
       >
         <div className="main-categories-section">
           <div className="main-categories-inner">
-            <h2 className={theme.section.title}>main categories</h2>
+            <h2 className={theme.section.title}>our collections</h2>
             <div className={styles.mainCategorySection.cardContainer}>
               {categoryImages.map((url, index) => (
                 <MainCategoryCard key={index} imageUrl={url} index={index} title={categoryTitles[index]} />
@@ -163,7 +163,7 @@ const Home = () => {
       >
         <div className="new-arrival-section">
           <div className="new-arrival-inner">
-            <h2 className={theme.section.title}>featured collection</h2>
+            <h2 className={theme.section.title}>top trends</h2>
             <Button>View All</Button>
             <div className={theme.productTheme.container}>
               <ProductCard />

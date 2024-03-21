@@ -18,15 +18,44 @@ import { Link } from "react-router-dom";
 import { headerLinks } from "./data/navBarLinks";
 import { IMainMenu } from "./types";
 import Dropdown from "../components/molecules/Dropdown";
+import Home from "../pages/home";
+import UserLogin from "../pages/auth/login";
+import CartDrawer from "../pages/shoppingCart";
+
+const generatePath = (title: string): string => {
+  const link = headerLinks.find(item => item.title === title);
+  return link ? link.navigation : "/";
+};
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openSubMenu, setOpenSubMenu] = useState<IMainMenu | null>(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
   const toggleNavMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const [openSubMenu, setOpenSubMenu] = useState<IMainMenu | null>(null);
+
   const toggleSubMenu = (subMenu: IMainMenu) => {
     setOpenSubMenu(openSubMenu === subMenu ? null : subMenu);
+  };
+
+  const handleLoginClick = () => {
+    setIsLoginOpen(true);
+  };
+
+  const handleCloseLogin = () => {
+    setIsLoginOpen(false);
+  };
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
   };
 
   return (
@@ -63,15 +92,15 @@ const Header: React.FC = () => {
             </div>
           </nav>
           <div className={styles.mainHeader.iconsContainer}>
-            <div className={styles.mainHeader.icon} title="Cart">
+            <button className={styles.mainHeader.icon} title="Cart" onClick={handleCartClick}>
               <ShoppingCartOutlined />
-            </div>
-            <div className={styles.mainHeader.icon} title="Wishlist">
+            </button>
+            <button className={styles.mainHeader.icon} title="Wishlist">
               <FavoriteBorderOutlined />
-            </div>
-            <div className={styles.mainHeader.icon} title="Profile">
+            </button>
+            <button className={styles.mainHeader.icon} title="Profile" onClick={handleLoginClick}>
               <PersonOutlineOutlined />
-            </div>
+            </button>
             <button className={styles.mainHeader.trackOrderBtn}>Track My Order</button>
             <div className={styles.mainHeader.mobileMenuIconContainer} title="menu" onClick={toggleNavMenu}>
               <Menu fontSize="large" className={styles.mainHeader.mobileMenuIcon} />
@@ -83,16 +112,23 @@ const Header: React.FC = () => {
         {/* Navbar */}
         <nav className={styles.navbar.outer}>
           <div className={styles.navbar.inner}>
-            <Link to="/">Home</Link>
-            <Dropdown trigger={<Link to="/">women</Link>} options={["Option 1", "Option 2", "Option 3"]} />
-            <Dropdown trigger={<Link to="/">men</Link>} options={["Option 4", "Option 5", "Option 6"]} />
-            <Dropdown trigger={<Link to="/">kids</Link>} options={["Option 7", "Option 8", "Option 9"]} />
-            <Link to="/">New-In</Link>
-            <Link to="/">Deals</Link>
-            <Link to="/">Competitions</Link>
-            <Link to="/">
-              <button className={styles.navbar.recommendationBtn}>AI-Fashion Recommender</button>
-            </Link>
+            {headerLinks.map((link, index) => (
+              <React.Fragment key={index}>
+                {link.subLinks ? (
+                  <Dropdown
+                    trigger={<Link to={generatePath(link.title)}>{link.title}</Link>}
+                    options={link.subLinks.map(subLink => subLink.title)}
+                  />
+                ) : (
+                  <Link
+                    to={generatePath(link.title)}
+                    className={link.isRecommendationButton ? styles.navbar.recommendationBtn : ""}
+                  >
+                    {link.title}
+                  </Link>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </nav>
       </div>
@@ -100,9 +136,7 @@ const Header: React.FC = () => {
 
       {/* Top Navbar - Mobile View */}
       <nav
-        className={`fixed left-0 top-0 h-screen w-full bg-primary-700 text-white lg:hidden ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } z-50 overflow-hidden transition-transform duration-300 ease-in-out`}
+        className={`fixed left-0 top-0 h-screen w-full bg-primary-700 text-white lg:hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} z-50 overflow-hidden transition-transform duration-300 ease-in-out`}
       >
         <div className={styles.topNavbarMobile.container}>
           <div className={styles.topNavbarMobile.navHeader}>
@@ -123,7 +157,10 @@ const Header: React.FC = () => {
                   <Link
                     to={link.navigation}
                     className={styles.topNavbarMobile.link}
-                    onClick={() => toggleSubMenu(link)}
+                    onClick={() => {
+                      toggleNavMenu();
+                      toggleSubMenu(link);
+                    }}
                   >
                     <span>{link.title}</span>
                   </Link>
@@ -157,9 +194,11 @@ const Header: React.FC = () => {
                 )}
               </div>
             ))}
-            <Link to="/">
-              <button className={styles.topNavbarMobile.recommendationButton}>AI-Fashion Recommender</button>
-            </Link>
+            {headerLinks[0]?.isRecommendationButton && (
+              <Link to={headerLinks[0].navigation}>
+                <button className={styles.topNavbarMobile.recommendationButton}>AI-Fashion Recommender</button>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -168,27 +207,28 @@ const Header: React.FC = () => {
       {/* Bottom Navbar - Mobile View */}
       <div className={styles.bottomNavbarMobile.outer}>
         <div className={styles.bottomNavbarMobile.inner}>
-          <Link to={"/"} className="mx-2">
+          <button className="mx-2">
             <SearchRounded />
-          </Link>
-          <Link to={"/"}>
+          </button>
+          <button onClick={handleLoginClick}>
             <PersonRounded />
-          </Link>
-          <div className={styles.bottomNavbarMobile.homeBtnContainer}>
-            <Link to={"/"}>
-              <HomeRounded style={{ fontSize: "30px" }} />
-            </Link>
-          </div>
-
-          <button className={styles.bottomNavbarMobile.cartBtn}>
+          </button>
+          <button className={styles.bottomNavbarMobile.homeBtnContainer} onClick={Home}>
+            <HomeRounded style={{ fontSize: "30px" }} />
+          </button>
+          <button className={styles.bottomNavbarMobile.cartBtn} onClick={handleCartClick}>
             <ShoppingCart />
           </button>
-          <Link to={"/"} className="mx-2">
+          <button className="mx-2">
             <Favorite />
-          </Link>
+          </button>
         </div>
       </div>
       {/* Bottom Navbar Mobile View ends here */}
+
+      {/* Drawer Toggles */}
+      <UserLogin open={isLoginOpen} onClose={handleCloseLogin} />
+      <CartDrawer openCart={isCartOpen} onCartClose={handleCartClose} cartItems={cartItems} />
     </>
   );
 };
