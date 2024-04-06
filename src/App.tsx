@@ -1,23 +1,29 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Routes as AppRoutes } from "./routing/routes";
 import Layout from "./_layouts";
-import Home from "./pages/home";
-import Competition from "./pages/outfitCompetition/competitionDetails";
-import CompetitionSubmission from "./pages/outfitCompetition/competitionSubmission";
+import { CartProvider } from "./components";
+import { Home, Competition, CompetitionSubmission, CreateProduct, CreateCategory } from "./pages";
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path={AppRoutes.ROOT} element={<Layout />}>
-          <Route index element={<Home />} />
-          {/* <Route path={AppRoutes.AUTHENTICATION} element="#" /> */}
-          <Route path="/user-profile" element={<span>User Profile Page</span>} />
-          <Route path="/outfit-competition" element={<Competition />} />
-          <Route path="/outfit-competition/submission" element={<CompetitionSubmission />} />
-          <Route path="*" element={<Navigate to={AppRoutes.ROOT} />} />
-        </Route>
-      </Routes>
+      <CartProvider>
+        <Routes>
+          <Route path={AppRoutes.ROOT} element={<Layout />}>
+            {/* Client Routes */}
+            <Route index element={<Home />} />
+            <Route path={AppRoutes.COMPETITION} element={<Competition />} />
+            <Route path={AppRoutes.COMPETITION_SUBMISSION} element={<CompetitionSubmission />} />
+
+            {/* Admin Routes */}
+            <Route path={AppRoutes.ADMIN_DASHBOARD} element={<span>Admin Dashboard</span>} />
+            <Route path={AppRoutes.CREATE_PRODUCT} element={<CreateProduct />} />
+            <Route path={AppRoutes.CREATE_CATEGORY} element={<CreateCategory />} />
+
+            <Route path="*" element={<Navigate to={AppRoutes.ROOT} />} />
+          </Route>
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   );
 };
