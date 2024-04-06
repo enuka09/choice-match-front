@@ -13,11 +13,12 @@ import {
   Favorite,
   PersonRounded,
 } from "@mui/icons-material";
+import Badge from "@mui/material/Badge";
 import Logo from "../assests/main_logo.png";
 import { Link } from "react-router-dom";
 import { headerLinks } from "./data/navBarLinks";
 import { IMainMenu } from "./types";
-import Dropdown from "../components/molecules/Dropdown";
+import { Dropdown, useCart } from "../components";
 import Home from "../pages/home";
 import UserLogin from "../pages/auth/login";
 import CartDrawer from "../pages/shoppingCart";
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
   const [openSubMenu, setOpenSubMenu] = useState<IMainMenu | null>(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems } = useCart();
 
   const toggleNavMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -92,9 +93,17 @@ const Header: React.FC = () => {
             </div>
           </nav>
           <div className={styles.mainHeader.iconsContainer}>
-            <button className={styles.mainHeader.icon} title="Cart" onClick={handleCartClick}>
-              <ShoppingCartOutlined />
-            </button>
+            {cartItems.length > 0 ? (
+              <Badge badgeContent={cartItems.length} color="primary">
+                <button className={styles.mainHeader.icon} title="Cart" onClick={handleCartClick}>
+                  <ShoppingCartOutlined />
+                </button>
+              </Badge>
+            ) : (
+              <button className={styles.mainHeader.icon} title="Cart" onClick={handleCartClick}>
+                <ShoppingCartOutlined />
+              </button>
+            )}
             <button className={styles.mainHeader.icon} title="Wishlist">
               <FavoriteBorderOutlined />
             </button>
@@ -216,9 +225,17 @@ const Header: React.FC = () => {
           <button className={styles.bottomNavbarMobile.homeBtnContainer} onClick={Home}>
             <HomeRounded style={{ fontSize: "30px" }} />
           </button>
-          <button className={styles.bottomNavbarMobile.cartBtn} onClick={handleCartClick}>
-            <ShoppingCart />
-          </button>
+          {cartItems.length > 0 ? (
+            <Badge badgeContent={cartItems.length} color="primary">
+              <button className={styles.bottomNavbarMobile.cartBtn} onClick={handleCartClick}>
+                <ShoppingCart />
+              </button>
+            </Badge>
+          ) : (
+            <button className={styles.bottomNavbarMobile.cartBtn} onClick={handleCartClick}>
+              <ShoppingCart />
+            </button>
+          )}
           <button className="mx-2">
             <Favorite />
           </button>
@@ -228,7 +245,7 @@ const Header: React.FC = () => {
 
       {/* Drawer Toggles */}
       <UserLogin open={isLoginOpen} onClose={handleCloseLogin} />
-      <CartDrawer openCart={isCartOpen} onCartClose={handleCartClose} cartItems={cartItems} />
+      <CartDrawer openCart={isCartOpen} onCartClose={handleCartClose} />
     </>
   );
 };
