@@ -1,24 +1,49 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import * as theme from "../../theme";
+import * as styles from "./styles";
 import Drawer from "@mui/material/Drawer";
 import { Close } from "@mui/icons-material";
 import Lottie from "react-lottie";
 import emptyCartAnimation from "../../assests/other/empty_cart.json";
-import { CartContent } from "../../components";
-import * as theme from "../../theme";
-import * as styles from "./styles";
+import { CartCard, useCart } from "../../components";
+import { formatPrice } from "../../utils/priceFormat";
 
-const CartDrawer = ({
-  openCart,
-  onCartClose,
-  cartItems,
-}: {
-  openCart: boolean;
-  onCartClose: () => void;
-  cartItems: any[];
-}) => {
+const CartDrawer = ({ openCart, onCartClose }: { openCart: boolean; onCartClose: () => void }) => {
+  const { cartItems } = useCart();
+  const [drawerWidth, setDrawerWidth] = useState("100%");
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const cartDrawerRef = useRef<HTMLDivElement>(null);
-  //   const [isAnimationVisible, setIsAnimationVisible] = useState(false);
+  const [subtotal, setSubtotal] = useState(0);
+
+  const calculateSubtotal = useCallback(() => {
+    let total = 0;
+    cartItems.forEach(item => {
+      total += item.unitPrice * (item.quantity || 1); // Default to 1 if quantity is undefined
+    });
+    setSubtotal(total);
+  }, [cartItems]);
+
+  useEffect(() => {
+    calculateSubtotal();
+  }, [cartItems, calculateSubtotal]);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1440) {
+        setDrawerWidth("33.33%");
+      } else if (screenWidth >= 768 && screenWidth < 1440) {
+        setDrawerWidth("50%");
+      } else {
+        setDrawerWidth("100%");
+      }
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   useEffect(() => {
     setIsCartDrawerOpen(openCart);
@@ -42,13 +67,19 @@ const CartDrawer = ({
     };
   }, [isCartDrawerOpen, onCartClose]);
 
-  // Determine if the cart is empty
   const isCartEmpty = cartItems.length === 0;
 
   return (
     <>
-      <div className={`${theme.drawer.backgroundBlur} ${isCartDrawerOpen ? "backdrop-blur-lg" : ""} `}></div>
-      <Drawer anchor="right" open={openCart} onClose={() => setIsCartDrawerOpen(false)}>
+      <div className={`${theme.drawer.backgroundBlur} ${isCartDrawerOpen ? "backdrop-blur-lg" : ""}`}></div>
+      <Drawer
+        anchor="right"
+        open={openCart}
+        onClose={onCartClose}
+        PaperProps={{
+          style: { width: drawerWidth },
+        }}
+      >
         <div id="cartOffCanvas" aria-labelledby="cartLabel" className={theme.drawer.container} ref={cartDrawerRef}>
           <div className={theme.drawer.menuSection}>
             <h5 id="cartLabel" className={theme.drawer.menuTopic}>
@@ -58,8 +89,8 @@ const CartDrawer = ({
               <Close />
             </button>
           </div>
-          <div className={styles.drawer.contentContainer}>
-            {isCartEmpty ? ( // Render animation if cart is empty
+          <div className="flex flex-grow flex-col overflow-auto">
+            {isCartEmpty ? (
               <div className={theme.drawer.inner}>
                 <div className={styles.drawer.animationContainer}>
                   <Lottie
@@ -78,10 +109,25 @@ const CartDrawer = ({
                 <button className={`${theme.form.button} ${styles.drawer.emptyBtn}`}>Let's fill it up</button>
               </div>
             ) : (
-              // Render product details if cart is not empty
-              <CartContent cartItems={cartItems} />
+              <CartCard cartItems={cartItems} />
             )}
           </div>
+          {!isCartEmpty && (
+            <div className="sticky bottom-0 w-full border-t bg-white p-4">
+              <div className="text-md flex justify-between font-semibold">
+                <p className="">Sub Total :</p>
+                <p className="">{formatPrice(subtotal)}</p>
+              </div>
+              <div className="mt-4 flex justify-between">
+                <button className="w-[calc(50%-0.5rem)] rounded-sm bg-primary-100 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-primary-300">
+                  Checkout
+                </button>
+                <button className="w-[calc(50%-0.5rem)] rounded-sm border border-primary-300 bg-white px-4 py-2 font-bold text-primary-100 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white">
+                  Detailed Cart
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </Drawer>
     </>

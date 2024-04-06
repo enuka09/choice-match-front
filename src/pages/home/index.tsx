@@ -4,7 +4,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as theme from "../../theme/index";
 import * as styles from "./styles";
+import axios from "axios";
 import firebase from "../../config/firebase";
+import { IProduct } from "../../models";
 import { AutoFixHigh, CreditCard, EmojiEvents, WatchLater } from "@mui/icons-material";
 import { ServiceCard, MainCategoryCard, ProductCard, Button, FeedbackCard, BrandCard } from "../../components";
 import aiBanner from "../../assests/ai_banner.png";
@@ -20,9 +22,10 @@ const Home = () => {
   const [categoryImages, setCategoryImages] = useState<string[]>([]);
   const [brandUrls, setBrandUrls] = useState<string[]>([]);
   const [currentBrandIndex, setCurrentBrandIndex] = useState(0);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
+  // Fetch Banner images from Firebase Storage
   useEffect(() => {
-    // Fetch banner images from Firebase Storage
     const fetchBannerImages = async () => {
       try {
         const storageRef = firebase.storage().ref();
@@ -49,28 +52,35 @@ const Home = () => {
     autoplaySpeed: 4000,
   };
 
+  // Fetch main-category images from Firebase
   useEffect(() => {
-    // Fetch main-category images from Firebase
     const fetchCategoryImages = async () => {
       try {
         const womenImageUrl = await firebase.storage().ref("Categories/Main/women.png").getDownloadURL();
         const menImageUrl = await firebase.storage().ref("Categories/Main/men.png").getDownloadURL();
         const kidsImageUrl = await firebase.storage().ref("Categories/Main/kids.png").getDownloadURL();
-
         // Set the images in the desired order
         setCategoryImages([womenImageUrl, menImageUrl, kidsImageUrl]);
       } catch (error) {
         console.error("Error fetching category images from Firebase Storage:", error);
       }
     };
-
     fetchCategoryImages();
   }, []);
-
   const categoryTitles = ["Women Collection", "Men Collection", "Kids Collection"];
 
+  // Fetch Featured Products
   useEffect(() => {
-    // Fetch brand images from Firebase Storage
+    findAllProducts();
+  }, []);
+
+  const findAllProducts = async () => {
+    const response = await axios.get("http://localhost:4000/api/v1/products/find-all-featured");
+    setProducts(response.data);
+  };
+
+  // Fetch Brand Images from Firebase Storage
+  useEffect(() => {
     const fetchBrandImages = async () => {
       try {
         const storageRef = firebase.storage().ref();
@@ -166,10 +176,24 @@ const Home = () => {
             <h2 className={theme.section.title}>top trends</h2>
             <Button>View All</Button>
             <div className={theme.productTheme.container}>
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
+              {products.map((product, index) => (
+                <ProductCard
+                  _id={product._id}
+                  name={product.name}
+                  image={product.image}
+                  description={product.description}
+                  unitPrice={product.unitPrice}
+                  mainCategory={product.mainCategory}
+                  subCategory={product.subCategory}
+                  brand={product.brand}
+                  color={product.color}
+                  size={product.size}
+                  qtyOnHand={product.qtyOnHand}
+                  isFeatured={product.isFeatured}
+                  dateCreated={product.dateCreated}
+                  key={index}
+                />
+              ))}
             </div>
           </div>
         </div>
