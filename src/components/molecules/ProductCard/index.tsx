@@ -2,10 +2,23 @@ import React, { useState } from "react";
 import { ShoppingCartOutlined, FavoriteBorderOutlined } from "@mui/icons-material";
 import { Card, CardContent, CardMedia } from "@mui/material";
 import * as styles from "./styles";
-import imageI from "../../../assests/new-arrival-1-a.png";
+import { IProduct } from "../../../models";
+import { useCart } from "../../../components";
+import { formatPrice } from "../../../utils/priceFormat";
+import CartDrawer from "../../../pages/shoppingCart";
 
-const ProductCard = () => {
+const ProductCard = (props: IProduct) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { addToCart } = useCart();
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
+  };
 
   return (
     <div>
@@ -21,23 +34,30 @@ const ProductCard = () => {
           transform: isHovered ? "translateY(-6px)" : "none",
         }}
       >
-        <CardMedia component="img" height="140" image={imageI} alt="Product Image" />
+        <CardMedia component="img" height="140" image={props.image} alt="Product Image" />
         <CardContent style={{ padding: "14px 0 16px 10px " }}>
-          <p className={styles.ProductCard.categoryName}>Card title</p>
-          <p className={styles.ProductCard.productName}>Huf & Dee women's t-shirt</p>
-          <p className={styles.ProductCard.price}>LKR 2,650.00</p>
+          <p className={styles.ProductCard.categoryName}>{props.mainCategory}</p>
+          <p className={styles.ProductCard.productName}>{props.name}</p>
+          <p className={styles.ProductCard.price}>{formatPrice(props.unitPrice)}</p>
         </CardContent>
         {isHovered && (
           <div className={styles.ProductCard.iconContainer}>
             <button className={styles.ProductCard.icon}>
               <FavoriteBorderOutlined />
             </button>
-            <button className={styles.ProductCard.icon}>
+            <button
+              className={styles.ProductCard.icon}
+              onClick={() => {
+                addToCart(props);
+                handleCartClick();
+              }}
+            >
               <ShoppingCartOutlined />
             </button>
           </div>
         )}
       </Card>
+      <CartDrawer openCart={isCartOpen} onCartClose={handleCartClose} />
     </div>
   );
 };
