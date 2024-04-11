@@ -14,7 +14,7 @@ import {
   PersonRounded,
 } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
-import Logo from "../assests/main_logo.png";
+import Logo from "../assests/logo/main_logo.png";
 import { Link } from "react-router-dom";
 import { headerLinks } from "./data/navBarLinks";
 import { IMainMenu } from "./types";

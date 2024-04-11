@@ -1,6 +1,6 @@
 import React from "react";
 import * as styles from "./styles";
-import Logo from "../assests/main_logo.png";
+import Logo from "../assests/logo/main_logo.png";
 import { InformationLinks, MenuLinks } from "./data/footerLinks";
 import { IFooterLink } from "./types";
 import { Link } from "react-router-dom";

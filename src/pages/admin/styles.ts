@@ -1,4 +1,4 @@
-// Add Product Styles
+// Add Product
 export const featured = {
   maincontainer: " flex items-center",
   labelContainer: "rounded-sm border border-white bg-transparent p-2 text-lg font-semibold text-white",

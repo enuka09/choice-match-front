@@ -6,11 +6,12 @@ import * as theme from "../../theme/index";
 import * as styles from "./styles";
 import axios from "axios";
 import firebase from "../../config/firebase";
-import { IProduct } from "../../models";
-import { AutoFixHigh, CreditCard, EmojiEvents, WatchLater } from "@mui/icons-material";
-import { ServiceCard, MainCategoryCard, ProductCard, Button, FeedbackCard, BrandCard } from "../../components";
-import aiBanner from "../../assests/ai_banner.png";
 import { useMediaQuery } from "@mui/material";
+import { AutoFixHigh, CreditCard, EmojiEvents, WatchLater } from "@mui/icons-material";
+import { IProduct } from "../../models";
+import { ServiceCard, MainCategoryCard, ProductCard, Button, FeedbackCard, BrandCard } from "../../components";
+import aiBanner from "../../assests/banners/ai_banner.png";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
@@ -59,7 +60,6 @@ const Home = () => {
         const womenImageUrl = await firebase.storage().ref("Categories/Main/women.png").getDownloadURL();
         const menImageUrl = await firebase.storage().ref("Categories/Main/men.png").getDownloadURL();
         const kidsImageUrl = await firebase.storage().ref("Categories/Main/kids.png").getDownloadURL();
-        // Set the images in the desired order
         setCategoryImages([womenImageUrl, menImageUrl, kidsImageUrl]);
       } catch (error) {
         console.error("Error fetching category images from Firebase Storage:", error);
@@ -75,7 +75,7 @@ const Home = () => {
   }, []);
 
   const findAllProducts = async () => {
-    const response = await axios.get("http://localhost:4000/api/v1/products/find-all-featured");
+    const response = await axios.get(`${baseURL}/products/find-all-featured`);
     setProducts(response.data);
   };
 

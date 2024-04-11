@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 interface TextAreaProps {
   name: string;
   value: string | undefined;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
 }
 
