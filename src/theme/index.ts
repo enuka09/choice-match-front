@@ -1,3 +1,4 @@
+// Client Themes
 export const border = {
   primary: "1px solid #e0e0e0",
   secondary: "1px solid #e5e5e5",
@@ -53,4 +54,19 @@ export const adminFunction = {
   imageText: "text-gray-500",
   button:
     "mt-4 block w-1/4 self-end rounded-sm bg-primary-100 px-4 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-primary-300 focus:outline-none",
+
+  pagePaddings: "px-12 pt-24",
+  contentContainer: "mb-4 mt-4",
+  buttonContainer: "flex justify-between gap-4",
+  searchInput: "flex-1 rounded-sm border border-white bg-inherit pl-4 text-white",
+  searchResult: "mt-1 text-white",
+};
+
+export const adminModal = {
+  modalContainer: "mt-4 flex flex-col gap-4",
+  container: "mt-8 mb-4 flex flex-col gap-8",
+  imageContainer: "flex items-end gap-2",
+  image: "w-1/4 rounded-sm",
+  images: "w-1/2 rounded-sm",
+  button: "rounded bg-primary-100 px-4 py-2 text-white transition duration-150 ease-in-out hover:bg-primary-300",
 };

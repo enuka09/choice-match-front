@@ -3,7 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { AppBar, Box, Toolbar, IconButton, InputBase, Badge, MenuItem, Menu } from "@mui/material";
 import { Search as SearchIcon, AccountCircle, Notifications, Mail, MoreVert } from "@mui/icons-material";
 
-const drawerWidth = 280; // Match the width of the SideNavbar
+const drawerWidth = 280;
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

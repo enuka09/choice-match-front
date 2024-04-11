@@ -2,12 +2,13 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import * as theme from "../../../../theme";
 import { Snackbar, Button } from "@mui/material";
-import { ICategory } from "../../../../models";
+import { IBrand } from "../../../../models";
 import { ThemedTextField } from "../../../../components";
 import { storage } from "../../../../config/firebase";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
-const CreateCategory: React.FC = () => {
-  const [categoryFormData, setCategoryFormData] = useState<ICategory>({
+const CreateBrand: React.FC = () => {
+  const [brandFormData, setBrandFormData] = useState<IBrand>({
     _id: "",
     name: "",
     image: "",
@@ -18,9 +19,9 @@ const CreateCategory: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [successMessageOpen, setSuccessMessageOpen] = useState(false);
 
-  const handleProductChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBrandChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setCategoryFormData({ ...categoryFormData, [name]: value });
+    setBrandFormData({ ...brandFormData, [name]: value });
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ const CreateCategory: React.FC = () => {
     fileInputRef.current?.click();
   };
 
-  const handleCategorySave = async (e: React.FormEvent) => {
+  const handleBrandSave = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -47,19 +48,19 @@ const CreateCategory: React.FC = () => {
 
       if (image) {
         const storageRef = storage.ref();
-        const imageRef = storageRef.child(`Categories/Main/${Math.random()}-${image.name}`);
+        const imageRef = storageRef.child(`Brands/${image.name}`);
         const snapshot = await imageRef.put(image);
 
         imageUrl = await snapshot.ref.getDownloadURL();
       }
 
-      await axios.post("http://localhost:4000/api/v1/main-categories/create", {
-        ...categoryFormData,
+      await axios.post(`${baseURL}/brands/create`, {
+        ...brandFormData,
         image: imageUrl,
       });
 
       setSuccessMessageOpen(true);
-      setCategoryFormData({
+      setBrandFormData({
         _id: "",
         name: "",
         image: "",
@@ -77,9 +78,9 @@ const CreateCategory: React.FC = () => {
 
   return (
     <div className={theme.adminFunction.pagePadding}>
-      <h2 className={theme.adminFunction.topic}>add category</h2>
+      <h2 className={theme.adminFunction.topic}>add brand</h2>
       <div className={theme.adminFunction.inner}>
-        <form className={theme.adminFunction.formContainer} onSubmit={handleCategorySave}>
+        <form className={theme.adminFunction.formContainer} onSubmit={handleBrandSave}>
           <div className={theme.adminFunction.imageUpload}>
             <div className={theme.adminFunction.imageContainer}>
               {imagePreviewUrl ? (
@@ -114,24 +115,34 @@ const CreateCategory: React.FC = () => {
           </div>
           <ThemedTextField
             name="name"
-            value={categoryFormData.name}
+            value={brandFormData.name}
             type="text"
-            onChange={handleProductChange}
-            label="Category Name"
+            onChange={handleBrandChange}
+            label="Brand Name"
           />
-          <button type="submit" className={theme.adminFunction.button}>
+          <Button
+            variant="contained"
+            type="submit"
+            className={theme.adminFunction.button}
+            sx={{
+              bgcolor: "#00BBDB",
+              "&:hover": {
+                bgcolor: "#0099A6",
+              },
+            }}
+          >
             SAVE
-          </button>
+          </Button>
         </form>
         <Snackbar
           open={successMessageOpen}
           autoHideDuration={2000}
           onClose={handleSnackbarClose}
-          message="Category saved successfully"
+          message="Brand saved successfully"
         />
       </div>
     </div>
   );
 };
 
-export default CreateCategory;
+export default CreateBrand;

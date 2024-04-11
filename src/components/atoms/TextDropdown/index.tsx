@@ -7,6 +7,7 @@ interface ThemedSelectFieldProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   options: { value: string; label: string }[];
+  disabled?: boolean;
 }
 
 const ThemedSelectField: React.FC<ThemedSelectFieldProps> = ({ name, value, onChange, label, options }) => {

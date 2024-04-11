@@ -11,6 +11,6 @@ export interface IProduct {
   size: string[];
   qtyOnHand: number;
   isFeatured?: boolean;
-  dateCreated?: Date;
+  dateCreated?: string;
   quantity?: number;
 }
