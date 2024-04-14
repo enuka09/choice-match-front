@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as theme from "../../theme";
 import * as styles from "./styles";
 import Drawer from "@mui/material/Drawer";
@@ -6,26 +6,14 @@ import { Close } from "@mui/icons-material";
 import Lottie from "react-lottie";
 import emptyCartAnimation from "../../assests/other/empty_cart.json";
 import { CartCard, useCart } from "../../components";
+import { CheckoutButton, DetailedCartButton } from "./actions";
 import { formatPrice } from "../../utils/priceFormat";
 
 const CartDrawer = ({ openCart, onCartClose }: { openCart: boolean; onCartClose: () => void }) => {
-  const { cartItems } = useCart();
+  const { cartItems, subtotal } = useCart();
   const [drawerWidth, setDrawerWidth] = useState("100%");
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const cartDrawerRef = useRef<HTMLDivElement>(null);
-  const [subtotal, setSubtotal] = useState(0);
-
-  const calculateSubtotal = useCallback(() => {
-    let total = 0;
-    cartItems.forEach(item => {
-      total += item.unitPrice * (item.quantity || 1); // Default to 1 if quantity is undefined
-    });
-    setSubtotal(total);
-  }, [cartItems]);
-
-  useEffect(() => {
-    calculateSubtotal();
-  }, [cartItems, calculateSubtotal]);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -114,17 +102,13 @@ const CartDrawer = ({ openCart, onCartClose }: { openCart: boolean; onCartClose:
           </div>
           {!isCartEmpty && (
             <div className="sticky bottom-0 w-full border-t bg-white p-4">
-              <div className="text-md flex justify-between font-semibold">
-                <p className="">Sub Total :</p>
-                <p className="">{formatPrice(subtotal)}</p>
+              <div className="text-md mb-4 flex justify-between font-semibold">
+                <p>Sub Total :</p>
+                <p>{formatPrice(subtotal)}</p>
               </div>
-              <div className="mt-4 flex justify-between">
-                <button className="w-[calc(50%-0.5rem)] rounded-sm bg-primary-100 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:bg-primary-300">
-                  Checkout
-                </button>
-                <button className="w-[calc(50%-0.5rem)] rounded-sm border border-primary-300 bg-white px-4 py-2 font-bold text-primary-100 transition duration-300 ease-in-out hover:bg-primary-300 hover:text-white">
-                  Detailed Cart
-                </button>
+              <div className="flex justify-between">
+                <CheckoutButton onCartClose={onCartClose} />
+                <DetailedCartButton onCartClose={onCartClose} />
               </div>
             </div>
           )}

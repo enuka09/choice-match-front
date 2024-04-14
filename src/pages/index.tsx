@@ -1,5 +1,7 @@
 // Client
 export { default as Home } from "./home";
+export { default as CheckoutShipping } from "./checkout/shippingDetails";
+export { default as CheckoutBilling } from "./checkout/paymentDetails";
 export { default as Competition } from "./outfitCompetition/competitionDetails";
 export { default as CompetitionSubmission } from "./outfitCompetition/competitionSubmission";
 

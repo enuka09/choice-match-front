@@ -1,5 +1,9 @@
 export enum Routes {
   ROOT = "/",
+  CART = "/cart",
+  CHECKOUT_SHIPPING = "/checkout",
+  CHECKOUT_BILLING = "/checkout/billing",
+  MESSAGE = "/checkout/payment/success",
   COMPETITION = "/outfit-competition",
   COMPETITION_SUBMISSION = "/outfit-competition/submission",
 
