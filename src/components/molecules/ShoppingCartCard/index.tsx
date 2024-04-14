@@ -1,3 +1,4 @@
+import React from "react";
 import { Delete } from "@mui/icons-material";
 import { IProduct } from "../../../models";
 import { formatPrice } from "../../../utils/priceFormat";
@@ -15,8 +16,8 @@ const CartContent = ({ cartItems }: { cartItems: IProduct[] }) => {
           </div>
           <div className="mx-6 flex flex-1 flex-col justify-center">
             <div>
-              <p className="mb-1 text-sm text-neutral-300">{item.mainCategory}</p>
               <h6 className="text-md mb-1 font-medium">{item.name}</h6>
+              <p className="mb-1 text-sm text-neutral-300">{item.mainCategory}</p>
               <p className="text-sm font-bold text-primary-100">
                 {item.quantity} * {formatPrice(item.unitPrice)}
               </p>
