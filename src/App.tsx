@@ -18,40 +18,66 @@ import {
   BrandContent,
   CreateBrand,
 } from "./pages";
+import { useEffect, useState } from "react";
+import HashLoader from "react-spinners/HashLoader";
 
 const App = () => {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <CartProvider>
-        <CheckoutProvider>
-          <Routes>
-            <Route path={AppRoutes.ROOT} element={<Layout />}>
-              {/* Client Routes */}
-              <Route index element={<Home />} />
-              <Route path={AppRoutes.COMPETITION} element={<Competition />} />
-              <Route path={AppRoutes.COMPETITION_SUBMISSION} element={<CompetitionSubmission />} />
+    <>
+      <BrowserRouter>
+        {loading ? (
+          <div className="spinner-overlay">
+            <HashLoader
+              color={"#00BBDB"}
+              loading={loading}
+              size={80}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
+        ) : (
+          <div>
+            <ScrollToTop />
+            <CartProvider>
+              <CheckoutProvider>
+                <Routes>
+                  <Route path={AppRoutes.ROOT} element={<Layout />}>
+                    {/* Client Routes */}
+                    <Route index element={<Home />} />
+                    <Route path={AppRoutes.COMPETITION} element={<Competition />} />
+                    <Route path={AppRoutes.COMPETITION_SUBMISSION} element={<CompetitionSubmission />} />
 
-              {/* Admin Routes */}
-              <Route path={AppRoutes.ADMIN_DASHBOARD} element={<span>Admin Dashboard</span>} />
-              <Route path={AppRoutes.VIEW_PRODUCTS} element={<ViewProducts />} />
-              <Route path={AppRoutes.CREATE_PRODUCT} element={<CreateProduct />} />
-              <Route path={AppRoutes.CATEGORY_CONTENT} element={<CategoryContent />} />
-              <Route path={AppRoutes.CREATE_CATEGORY} element={<CreateCategory />} />
-              <Route path={AppRoutes.SUBCATEGORY_CONTENT} element={<SubCategoryContent />} />
-              <Route path={AppRoutes.CREATE_SUBCATEGORY} element={<CreateSubCategory />} />
-              <Route path={AppRoutes.BRAND_CONTENT} element={<BrandContent />} />
-              <Route path={AppRoutes.CREATE_BRAND} element={<CreateBrand />} />
+                    {/* Admin Routes */}
+                    <Route path={AppRoutes.ADMIN_DASHBOARD} element={<span>Admin Dashboard</span>} />
+                    <Route path={AppRoutes.VIEW_PRODUCTS} element={<ViewProducts />} />
+                    <Route path={AppRoutes.CREATE_PRODUCT} element={<CreateProduct />} />
+                    <Route path={AppRoutes.CATEGORY_CONTENT} element={<CategoryContent />} />
+                    <Route path={AppRoutes.CREATE_CATEGORY} element={<CreateCategory />} />
+                    <Route path={AppRoutes.SUBCATEGORY_CONTENT} element={<SubCategoryContent />} />
+                    <Route path={AppRoutes.CREATE_SUBCATEGORY} element={<CreateSubCategory />} />
+                    <Route path={AppRoutes.BRAND_CONTENT} element={<BrandContent />} />
+                    <Route path={AppRoutes.CREATE_BRAND} element={<CreateBrand />} />
 
-              <Route path="*" element={<Navigate to={AppRoutes.ROOT} />} />
-            </Route>
-            <Route path={`${AppRoutes.CHECKOUT_SHIPPING}/:orderId`} element={<CheckoutShipping />} />
-            <Route path={`${AppRoutes.CHECKOUT_BILLING}/:orderId`} element={<CheckoutBilling />} />
-            <Route path={`${AppRoutes.MESSAGE}/:orderId`} element={<MessageCard />} />
-          </Routes>
-        </CheckoutProvider>
-      </CartProvider>
-    </BrowserRouter>
+                    <Route path="*" element={<Navigate to={AppRoutes.ROOT} />} />
+                  </Route>
+                  <Route path={`${AppRoutes.CHECKOUT_SHIPPING}/:orderId`} element={<CheckoutShipping />} />
+                  <Route path={`${AppRoutes.CHECKOUT_BILLING}/:orderId`} element={<CheckoutBilling />} />
+                  <Route path={`${AppRoutes.MESSAGE}/:orderId`} element={<MessageCard />} />
+                </Routes>
+              </CheckoutProvider>
+            </CartProvider>
+          </div>
+        )}
+      </BrowserRouter>
+    </>
   );
 };
 

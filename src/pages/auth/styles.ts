@@ -10,4 +10,5 @@ export const form = {
   button: "mt-8 block w-full",
   linkSection: "mt-4 flex justify-center text-13 font-medium",
   link: "text-13 text-primary-100 underline hover:text-primary-300 ml-1",
+  validation: "mt-2 text-right text-sm font-semibold text-red-600",
 };

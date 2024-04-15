@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import * as theme from "../../../../theme";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Snackbar } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
@@ -9,7 +8,7 @@ import { DataGrid, ActionButtons, Modal, Column } from "../../../../components";
 import { useFetchData } from "../../../../utils";
 import { EditSubCategoryContent } from "../../../../pages";
 import { storage } from "../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 const SubCategoryContent: React.FC = () => {
   const [subCategories, setSubCategories] = useState<ISubCategory[]>([]);
@@ -30,8 +29,7 @@ const SubCategoryContent: React.FC = () => {
   }, []);
 
   const fetchSubCategories = () => {
-    axios
-      .get(`${baseURL}/sub-categories/find-all`)
+    AxiosInstance.get("/sub-categories/find-all")
       .then(response => {
         setSubCategories(response.data);
         setFilteredSubCategories(response.data);
@@ -80,8 +78,8 @@ const SubCategoryContent: React.FC = () => {
     if (!selectedSubCategory) return;
 
     try {
-      const response = await axios.put(
-        `${baseURL}/sub-categories/update/${selectedSubCategory._id}`,
+      const response = await AxiosInstance.put(
+        `/sub-categories/update/${selectedSubCategory._id}`,
         subCategoryFormData,
       );
       console.log(response.data.message);
@@ -105,7 +103,7 @@ const SubCategoryContent: React.FC = () => {
     if (!subCategoryToDelete) return;
 
     try {
-      await axios.delete(`${baseURL}/sub-categories/delete-by-id/${subCategoryToDelete._id}`);
+      await AxiosInstance.delete(`/sub-categories/delete-by-id/${subCategoryToDelete._id}`);
       setSuccessMessageOpen(true);
       setSnackbarMessage("Sub-Category successfully Deleted");
       fetchSubCategories();

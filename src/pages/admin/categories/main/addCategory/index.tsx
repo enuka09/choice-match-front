@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
 import * as theme from "../../../../../theme";
 import { Snackbar, Button } from "@mui/material";
 import { ICategory } from "../../../../../models";
 import { ThemedTextField } from "../../../../../components";
 import { storage } from "../../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../../config/axiosInstance";
 
 const CreateCategory: React.FC = () => {
   const [categoryFormData, setCategoryFormData] = useState<ICategory>({
@@ -54,7 +53,7 @@ const CreateCategory: React.FC = () => {
         imageUrl = await snapshot.ref.getDownloadURL();
       }
 
-      await axios.post(`${baseURL}/main-categories/create`, {
+      await AxiosInstance.post("/main-categories/create", {
         ...categoryFormData,
         image: imageUrl,
       });

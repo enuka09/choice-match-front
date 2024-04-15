@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import * as theme from "../../../../theme";
 import { IProduct, ICategory, ISubCategory, IBrand } from "../../../../models";
 import { ThemedTextField, ThemedTextArea, ThemedTextDropdown, ThemedToggleSwitch } from "../../../../components";
-import * as theme from "../../../../theme";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 interface EditProductContentProps {
   product: IProduct;
@@ -31,7 +30,7 @@ const EditProductContent: React.FC<EditProductContentProps> = ({
     const fetchSubCategories = async () => {
       if (product.mainCategory) {
         try {
-          const response = await axios.get(`${baseURL}/sub-categories/find-by-main-category/${product.mainCategory}`);
+          const response = await AxiosInstance.get(`/sub-categories/find-by-main-category/${product.mainCategory}`);
           setSubCategoriesChange(response.data);
         } catch (error) {
           console.error("Failed to fetch subcategories:", error);

@@ -1,11 +1,10 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
 import * as theme from "../../../../theme";
 import { Snackbar, Button } from "@mui/material";
 import { IBrand } from "../../../../models";
 import { ThemedTextField } from "../../../../components";
 import { storage } from "../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 const CreateBrand: React.FC = () => {
   const [brandFormData, setBrandFormData] = useState<IBrand>({
@@ -54,7 +53,7 @@ const CreateBrand: React.FC = () => {
         imageUrl = await snapshot.ref.getDownloadURL();
       }
 
-      await axios.post(`${baseURL}/brands/create`, {
+      await AxiosInstance.post("/brands/create", {
         ...brandFormData,
         image: imageUrl,
       });

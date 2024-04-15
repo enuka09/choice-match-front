@@ -1,15 +1,32 @@
 import { useState, useEffect, useRef } from "react";
 import Drawer from "@mui/material/Drawer";
+import { Close } from "@mui/icons-material";
 import Lottie from "react-lottie";
 import * as theme from "../../../theme";
 import * as styles from "../styles";
 import signupAnimation from "../../../assests/auth/signup.json";
-import { Close } from "@mui/icons-material";
-// import UserLogin from "../login";
+import AxiosInstance from "../../../config/axiosInstance";
+import { ThemedToggleButton } from "../../../components/atoms/ToggleSwitch";
+
+interface ErrorState {
+  fullName?: string;
+  confirmPassword?: string;
+  [key: string]: string | undefined;
+}
 
 const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () => void }) => {
   const [isSignupDrawerOpen, setIsSignupDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [dob, setDob] = useState("");
+  const [gender, setGender] = useState("");
+  const [isDateInput, setIsDateInput] = useState(false);
+  const [errors, setErrors] = useState<ErrorState>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsSignupDrawerOpen(openSignup);
@@ -26,25 +43,102 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
+      setFullName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      setPhone("");
+      setDob("");
+      setGender("");
+      setErrors({});
+      setIsLoading(false);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSignupDrawerOpen, onClose]);
+
+  const handleGenderChange = (newGender: string | null) => {
+    if (newGender !== null) {
+      setGender(newGender);
+    }
+  };
+
+  const validateSignupForm = () => {
+    let isValid = true;
+    const newErrors: ErrorState = {};
+    const dobDate = new Date(dob);
+    const cutoffDate = new Date("2014-01-01");
+    if (
+      !fullName.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim() ||
+      !phone.trim() ||
+      !dob.trim() ||
+      !gender.trim()
+    ) {
+      newErrors["formValidation"] = "Please fill all fields";
+      isValid = false;
+    } else if (password !== confirmPassword) {
+      newErrors["passwordValidation"] = "Passwords do not match!";
+      isValid = false;
+    } else if (phone.length !== 10) {
+      newErrors["phoneValidation"] = "Phone number is invalid";
+      isValid = false;
+    } else if (dobDate >= cutoffDate) {
+      newErrors["dobValidation"] = "Hey, time traveler! provide your actual birth date";
+      isValid = false;
+    }
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!validateSignupForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const userData = {
+      fullName,
+      email,
+      password,
+      phone,
+      dob: dob.toString().split("T")[0],
+      gender,
+      isAdmin: "false",
+      activeState: true,
+    };
+
+    try {
+      const response = await AxiosInstance.post("/users/register", userData);
+      if (response.status === 201) {
+        alert("Congratualations, Your Account is setup successfuly!");
+      }
+    } catch (error) {
+      alert(`Registration Failed, Try Again!`);
+    } finally {
+      setIsLoading(false);
+      onClose();
+    }
+  };
 
   return (
     <>
       <div className={`${theme.drawer.backgroundBlur} ${isSignupDrawerOpen ? "backdrop-blur-lg" : ""} `}></div>
       <Drawer anchor="right" open={openSignup} onClose={() => setIsSignupDrawerOpen(false)}>
         <div
-          id="userSignupOffcanvas"
-          aria-labelledby="userSignupLabel"
+          id="handleSignupOffcanvas"
+          aria-labelledby="handleSignupLabel"
           className={theme.drawer.container}
           ref={drawerRef}
         >
           <div className={theme.drawer.menuSection}>
-            <h5 id="userSignupLabel" className={theme.drawer.menuTopic}>
+            <h5 id="handleSignupLabel" className={theme.drawer.menuTopic}>
               Signup
             </h5>
             <button type="button" className={theme.drawer.menuButton} onClick={onClose}>
@@ -65,35 +159,71 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                 />
               </div>
               <div className={styles.form.container}>
-                <p className={styles.form.topic}>Hello Stranger!</p>
+                <p className={styles.form.topic}>Hello Fashionista!</p>
                 <p className={styles.form.text}>
-                  Glad to see you joining with us. Please fill up the fields to set your account up.
+                  Sign up to unlock exclusive styles. Start your stylish journey with us today!
                 </p>
-                <form className="mt-4">
+                <form className="mt-4" onSubmit={handleSignup}>
                   <input
                     type="text"
-                    className={`${theme.form.input} ${styles.form.input} mb-4`}
-                    placeholder="Full Name"
-                  />
-                  <input type="email" className={`${theme.form.input} ${styles.form.input} mb-4`} placeholder="Email" />
-                  <input
-                    type="password"
-                    className={`${theme.form.input} ${styles.form.input} mb-4`}
-                    placeholder="Password"
-                  />
-                  <input
-                    type="password"
-                    className={`${theme.form.input} ${styles.form.input} mb-4`}
-                    placeholder="Confirm Password"
-                  />
-                  <input type="text" className={`${theme.form.input} ${styles.form.input} mb-4`} placeholder="Phone" />
-                  <input
-                    type="date"
                     className={`${theme.form.input} ${styles.form.input}`}
-                    placeholder="Date of Birth"
+                    placeholder="Full Name"
+                    value={fullName}
+                    onChange={e => setFullName(e.target.value)}
                   />
-                  <button type="submit" className={`${theme.form.button} ${styles.form.button}`}>
-                    Create New Account
+                  <input
+                    type="email"
+                    className={`${theme.form.input} ${styles.form.input} mt-4`}
+                    placeholder="Email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    className={`${theme.form.input} ${styles.form.input} mt-4`}
+                    placeholder="Password"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                  />
+                  <input
+                    type="password"
+                    className={`${theme.form.input} ${styles.form.input} mt-4`}
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                  />
+                  {errors.passwordValidation && (
+                    <div className={styles.form.validation}>{errors.passwordValidation}</div>
+                  )}
+                  <ThemedToggleButton gender={gender} onChange={handleGenderChange} />
+                  <input
+                    type="text"
+                    className={`${theme.form.input} ${styles.form.input} mt-4`}
+                    placeholder="Phone"
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                  />
+                  {errors.phoneValidation && <div className={styles.form.validation}>{errors.phoneValidation}</div>}
+                  {isDateInput ? (
+                    <input
+                      type="date"
+                      className={`${theme.form.input} ${styles.form.input} mt-4`}
+                      value={dob.toString().split("T")[0]}
+                      onChange={e => setDob(e.target.value)}
+                      onBlur={() => setIsDateInput(false)}
+                    />
+                  ) : (
+                    <input
+                      type="text"
+                      placeholder="Date of Birth"
+                      className={`${theme.form.input} ${styles.form.input} mt-4`}
+                      onFocus={() => setIsDateInput(true)}
+                    />
+                  )}
+                  {errors.dobValidation && <div className={styles.form.validation}>{errors.dobValidation}</div>}
+                  {errors.formValidation && <div className={styles.form.validation}>{errors.formValidation}</div>}
+                  <button type="submit" disabled={isLoading} className={`${theme.form.button} ${styles.form.button}`}>
+                    {isLoading ? "Creating Account..." : "Create New Account"}
                   </button>
                   <div className={`${styles.form.linkSection} mb-4`}>
                     <p>Already have an Account?</p>
@@ -115,7 +245,6 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
           </div>
         </div>
       </Drawer>
-      {/* <UserLogin open={isLoginOpen} onClose={handleCloseLogin} /> */}
     </>
   );
 };

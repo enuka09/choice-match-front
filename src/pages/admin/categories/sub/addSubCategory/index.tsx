@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import * as theme from "../../../../../theme";
 import { Snackbar, Button } from "@mui/material";
 import { ISubCategory, ICategory } from "../../../../../models";
 import { ThemedTextField, ThemedTextDropdown } from "../../../../../components";
 import { storage } from "../../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../../config/axiosInstance";
 
 const CreateSubCategory: React.FC = () => {
   const [subCategoryForm, setSubCategoryForm] = useState<ISubCategory>({
@@ -45,7 +44,7 @@ const CreateSubCategory: React.FC = () => {
   useEffect(() => {
     const fetchMainCategories = async () => {
       try {
-        const response = await axios.get(`${baseURL}/main-categories/find-all`);
+        const response = await AxiosInstance.get("/main-categories/find-all");
         setMainCategories(response.data);
       } catch (error) {
         console.error("Failed to fetch main categories", error);
@@ -69,7 +68,7 @@ const CreateSubCategory: React.FC = () => {
         imageUrl = await snapshot.ref.getDownloadURL();
       }
 
-      await axios.post(`${baseURL}/sub-categories/create`, {
+      await AxiosInstance.post("/sub-categories/create", {
         ...subCategoryForm,
         image: imageUrl,
       });

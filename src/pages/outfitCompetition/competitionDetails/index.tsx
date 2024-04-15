@@ -1,17 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { competition } from "../styles";
+import { CompetitionCard } from "../../../components";
+import { Routes } from "../../../routing/routes";
 import banner from "../../../assests/banners/competition_banner.png";
 import theme_halloween from "../../../assests/competition/theme_halloween.jpg";
 import theme_christmas from "../../../assests/competition/theme_christmas.jpg";
 import theme_street from "../../../assests/competition/theme_street.jpg";
-import { CompetitionCard } from "../../../components";
 
 const Competitions: React.FC = () => {
   const navigate = useNavigate();
 
   const handleParticipateClick = (imageUrl: string, title: string, description: string) => {
-    navigate("/outfit-competition/submission", {
+    navigate(Routes.COMPETITION_SUBMISSION, {
       state: { imageUrl, title, description },
     });
   };

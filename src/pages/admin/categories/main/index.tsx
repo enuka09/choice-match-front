@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import * as theme from "../../../../theme";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Snackbar } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
@@ -8,7 +7,7 @@ import { ICategory } from "../../../../models";
 import { DataGrid, ActionButtons, Modal, Column } from "../../../../components";
 import { EditCategoryContent } from "../../../../pages";
 import { storage } from "../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 const CategoryContent: React.FC = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -27,8 +26,7 @@ const CategoryContent: React.FC = () => {
   }, []);
 
   const fetchCategories = () => {
-    axios
-      .get(`${baseURL}/main-categories/find-all`)
+    AxiosInstance.get("/main-categories/find-all")
       .then(response => {
         setCategories(response.data);
         setFilteredCategories(response.data);
@@ -73,7 +71,7 @@ const CategoryContent: React.FC = () => {
     if (!selectedCategory) return;
 
     try {
-      const response = await axios.put(`${baseURL}/main-categories/update/${selectedCategory._id}`, categoryFormData);
+      const response = await AxiosInstance.put(`/main-categories/update/${selectedCategory._id}`, categoryFormData);
       console.log(response.data.message);
 
       setIsModalOpen(false);
@@ -95,7 +93,7 @@ const CategoryContent: React.FC = () => {
     if (!categoryToDelete) return;
 
     try {
-      await axios.delete(`${baseURL}/main-categories/delete-by-id/${categoryToDelete._id}`);
+      await AxiosInstance.delete(`/main-categories/delete-by-id/${categoryToDelete._id}`);
       setSuccessMessageOpen(true);
       setSnackbarMessage("Category successfully Deleted");
       fetchCategories();

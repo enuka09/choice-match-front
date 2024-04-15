@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import * as theme from "../../../../theme";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Snackbar } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
+import * as theme from "../../../../theme";
 import { IProduct } from "../../../../models";
 import { DataGrid, ActionButtons, Modal, Column } from "../../../../components";
 import { formatPrice, useFetchData } from "../../../../utils";
 import { ProductContent, EditProductContent } from "../../../../pages";
 import { storage } from "../../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 const ViewProducts: React.FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -30,8 +29,7 @@ const ViewProducts: React.FC = () => {
   }, []);
 
   const fetchProducts = () => {
-    axios
-      .get(`${baseURL}/products/find-all`)
+    AxiosInstance.get("/products/find-all")
       .then(response => {
         setProducts(response.data);
         setFilteredProducts(response.data);
@@ -95,7 +93,7 @@ const ViewProducts: React.FC = () => {
     if (!selectedProduct) return;
 
     try {
-      const response = await axios.put(`${baseURL}/products/update/${selectedProduct._id}`, productFormData);
+      const response = await AxiosInstance.put(`/products/update/${selectedProduct._id}`, productFormData);
       console.log(response.data.message);
 
       setIsModalOpen(false);
@@ -117,7 +115,7 @@ const ViewProducts: React.FC = () => {
     if (!productToDelete) return;
 
     try {
-      await axios.delete(`${baseURL}/products/delete-by-id/${productToDelete._id}`);
+      await AxiosInstance.delete(`/products/delete-by-id/${productToDelete._id}`);
       setSuccessMessageOpen(true);
       setSnackbarMessage("Product successfully deleted");
       fetchProducts();

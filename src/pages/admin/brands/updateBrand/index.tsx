@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
+import * as theme from "../../../../theme";
 import { IBrand } from "../../../../models";
 import { ThemedTextField } from "../../../../components";
-import * as theme from "../../../../theme";
 
 interface EditBrandContentProps {
   brand: IBrand;
