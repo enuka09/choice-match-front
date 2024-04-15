@@ -1,14 +1,11 @@
-// checkoutShipping Component
-
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as styles from "../../../_layouts/styles";
 import { checkout } from "../styles";
-import logo from "../../../assests/logo/main_logo.png";
-import { CheckoutProducts } from "../../../components";
 import { Routes } from "../../../routing/routes";
-import { CustomTextField, useCart } from "../../../components";
+import { CustomTextField, useCart, CheckoutProducts } from "../../../components";
 import { useCheckout } from "../../../utils";
+import logo from "../../../assests/logo/main_logo.png";
 
 const CheckoutShipping = () => {
   const navigate = useNavigate();

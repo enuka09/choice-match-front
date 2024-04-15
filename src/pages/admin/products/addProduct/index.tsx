@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import * as theme from "../../../../theme";
 import * as styles from "../../styles";
 import { Close as CloseIcon, Add as AddIcon } from "@mui/icons-material";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Button } from "@mui/material";
 import { IProduct, ICategory, ISubCategory, IBrand } from "../../../../models";
 import { ThemedTextField, ThemedTextArea, ThemedTextDropdown, ThemedToggleSwitch } from "../../../../components";
 import { storage } from "../../../../config/firebase";
-import Button from "@mui/material/Button";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../../config/axiosInstance";
 
 const CreateProduct: React.FC = () => {
   const [productFormData, setProductFormData] = useState<IProduct>({
@@ -61,7 +59,7 @@ const CreateProduct: React.FC = () => {
   useEffect(() => {
     const fetchMainCategories = async () => {
       try {
-        const response = await axios.get(`${baseURL}/main-categories/find-all`);
+        const response = await AxiosInstance.get("/main-categories/find-all");
         setMainCategories(response.data);
       } catch (error) {
         console.error("Failed to fetch main categories", error);
@@ -73,8 +71,7 @@ const CreateProduct: React.FC = () => {
 
   useEffect(() => {
     if (productFormData.mainCategory) {
-      axios
-        .get(`${baseURL}/sub-categories/find-by-main-category/${productFormData.mainCategory}`)
+      AxiosInstance.get(`/sub-categories/find-by-main-category/${productFormData.mainCategory}`)
         .then(response => {
           setSubCategories(response.data);
         })
@@ -89,7 +86,7 @@ const CreateProduct: React.FC = () => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await axios.get(`${baseURL}/brands/find-all`);
+        const response = await AxiosInstance.get(`/brands/find-all`);
         setBrands(response.data);
       } catch (error) {
         console.error("Failed to fetch brands", error);
@@ -134,7 +131,7 @@ const CreateProduct: React.FC = () => {
         imageUrl = await snapshot.ref.getDownloadURL();
       }
 
-      await axios.post(`${baseURL}/products/create`, {
+      await AxiosInstance.post("/products/create", {
         ...productFormData,
         image: imageUrl,
       });

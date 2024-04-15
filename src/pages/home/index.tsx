@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
+import { AutoFixHigh, CreditCard, EmojiEvents, WatchLater } from "@mui/icons-material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as theme from "../../theme/index";
 import * as styles from "./styles";
-import axios from "axios";
+import AxiosInstance from "../../config/axiosInstance";
 import firebase from "../../config/firebase";
-import { useMediaQuery } from "@mui/material";
-import { AutoFixHigh, CreditCard, EmojiEvents, WatchLater } from "@mui/icons-material";
 import { IProduct } from "../../models";
 import { ServiceCard, MainCategoryCard, ProductCard, Button, FeedbackCard, BrandCard } from "../../components";
 import aiBanner from "../../assests/banners/ai_banner.png";
-const baseURL = process.env.REACT_APP_BASE_URL;
 
 const Home = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
@@ -75,7 +74,7 @@ const Home = () => {
   }, []);
 
   const findAllProducts = async () => {
-    const response = await axios.get(`${baseURL}/products/find-all-featured`);
+    const response = await AxiosInstance.get("/products/find-all-featured");
     setProducts(response.data);
   };
 

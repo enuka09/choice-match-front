@@ -6,7 +6,7 @@ export { default as ThemedTextFieldDisabled } from "./atoms/TextFieldDisabled";
 export { default as ThemedTextArea } from "./atoms/TextArea";
 export { default as ThemedTextAreaDisabled } from "./atoms/TextAreaDisabled";
 export { default as ThemedTextDropdown } from "./atoms/TextDropdown";
-export { default as ThemedToggleSwitch } from "./atoms/ToggleSwitch";
+export { ThemedToggleSwitch } from "./atoms/ToggleSwitch";
 export { default as ActionButtons } from "./atoms/ActionButtons";
 
 // molecules

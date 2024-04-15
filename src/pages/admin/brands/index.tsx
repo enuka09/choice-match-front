@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import * as theme from "../../../theme";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Snackbar } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
@@ -8,7 +7,7 @@ import { IBrand } from "../../../models";
 import { DataGrid, ActionButtons, Modal, Column } from "../../../components";
 import { EditBrandContent } from "../../../pages";
 import { storage } from "../../../config/firebase";
-const baseURL = process.env.REACT_APP_BASE_URL;
+import AxiosInstance from "../../../config/axiosInstance";
 
 const BrandContent: React.FC = () => {
   const [brands, setBrands] = useState<IBrand[]>([]);
@@ -27,8 +26,7 @@ const BrandContent: React.FC = () => {
   }, []);
 
   const fetchBrands = () => {
-    axios
-      .get(`${baseURL}/brands/find-all`)
+    AxiosInstance.get("/brands/find-all")
       .then(response => {
         setBrands(response.data);
         setFilteredBrands(response.data);
@@ -73,7 +71,7 @@ const BrandContent: React.FC = () => {
     if (!selectedBrand) return;
 
     try {
-      const response = await axios.put(`${baseURL}/brands/update/${selectedBrand._id}`, brandFormData);
+      const response = await AxiosInstance.put(`}/brands/update/${selectedBrand._id}`, brandFormData);
       console.log(response.data.message);
 
       setIsModalOpen(false);
@@ -95,7 +93,7 @@ const BrandContent: React.FC = () => {
     if (!brandToDelete) return;
 
     try {
-      await axios.delete(`${baseURL}/brands/delete-by-id/${brandToDelete._id}`);
+      await AxiosInstance.delete(`/brands/delete-by-id/${brandToDelete._id}`);
       setSuccessMessageOpen(true);
       setSnackbarMessage("Brand successfully Deleted");
       fetchBrands();
