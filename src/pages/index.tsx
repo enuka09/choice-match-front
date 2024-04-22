@@ -4,6 +4,9 @@ export { default as CheckoutShipping } from "./checkout/shippingDetails";
 export { default as CheckoutBilling } from "./checkout/paymentDetails";
 export { default as Competition } from "./outfitCompetition/competitionDetails";
 export { default as CompetitionSubmission } from "./outfitCompetition/competitionSubmission";
+export { default as SelectionBasedRecommendations } from "./fashionRecommendation/selectionMode";
+export { default as PromptBasedRecommendations } from "./fashionRecommendation/promptMode";
+export { default as Auth } from "./fashionRecommendation";
 
 // Admin
 export { default as ViewProducts } from "./admin/products/viewProducts";

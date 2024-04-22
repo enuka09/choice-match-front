@@ -6,6 +6,9 @@ export enum Routes {
   MESSAGE = "/checkout/payment/success",
   COMPETITION = "/outfit-competition",
   COMPETITION_SUBMISSION = "/outfit-competition/submission",
+  SELECTION_FASHION_RECOMMENDER = "/fashion-recommender",
+  PROMPT_FASHION_RECOMMENDER = "/fashion-recommender/freestyle-mode",
+  AUTH = "/fashion-recommender/auth",
 
   ADMIN_DASHBOARD = "/admin-dashboard",
   VIEW_PRODUCTS = "/admin-dashboard/products",

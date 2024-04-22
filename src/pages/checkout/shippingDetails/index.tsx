@@ -36,7 +36,6 @@ const CheckoutShipping = () => {
 
   return (
     <>
-      <div className="hidden">{orderId}</div>
       <div className={styles.topHeader.container}>
         <p>
           Shop, Smile, Repeat. Discover your style with AI-Powered Fashion! Enjoy free delivery on orders over LKR

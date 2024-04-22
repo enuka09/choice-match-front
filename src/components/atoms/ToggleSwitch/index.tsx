@@ -10,9 +10,18 @@ interface ToggleSwitchProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
   label: string;
+  labelPlacement?: "start" | "end" | "top" | "bottom";
+  textColor?: string;
 }
 
-export const ThemedToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange, name, label }) => {
+export const ThemedToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  checked,
+  onChange,
+  name,
+  label,
+  labelPlacement,
+  textColor,
+}) => {
   return (
     <FormControlLabel
       control={
@@ -34,7 +43,16 @@ export const ThemedToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onCha
         />
       }
       label={label}
-      className="text-white"
+      labelPlacement={labelPlacement}
+      sx={{
+        color: textColor,
+        margin: 0,
+        padding: 0,
+        marginLeft: 0,
+        "& .MuiFormControlLabel-label": {
+          marginLeft: 0,
+        },
+      }}
     />
   );
 };
@@ -71,7 +89,7 @@ export const ThemedToggleButton: React.FC<ThemedToggleButtonProps> = ({ gender, 
       }}
     >
       <ToggleButton
-        value="male"
+        value="Male"
         aria-label="male"
         sx={{
           "&.Mui-selected, &.Mui-selected:hover": {
@@ -87,7 +105,7 @@ export const ThemedToggleButton: React.FC<ThemedToggleButtonProps> = ({ gender, 
         Male
       </ToggleButton>
       <ToggleButton
-        value="female"
+        value="Female"
         aria-label="female"
         sx={{
           "&.Mui-selected, &.Mui-selected:hover": {
@@ -102,6 +120,70 @@ export const ThemedToggleButton: React.FC<ThemedToggleButtonProps> = ({ gender, 
         <FemaleIcon />
         Female
       </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+interface ThemedSelectButtonProps {
+  name: string;
+  options: Array<{
+    label: string;
+    value: any;
+    color?: string;
+  }>;
+  selectedValue: any;
+  onChange: (newValue: any) => void;
+}
+
+export const ThemedSelectButton: React.FC<ThemedSelectButtonProps> = ({ name, options, selectedValue, onChange }) => {
+  const handleToggle = (event: any, newSelection: string) => {
+    if (newSelection !== null) {
+      onChange(newSelection);
+    }
+  };
+  return (
+    <ToggleButtonGroup
+      value={selectedValue}
+      exclusive
+      onChange={handleToggle}
+      aria-label={`${name} selection`}
+      fullWidth
+      sx={{
+        display: "flex",
+        marginTop: "16px",
+        "& .MuiToggleButtonGroup-grouped": {
+          "&:not(:last-of-type)": {
+            borderRight: 0,
+          },
+          "&:first-of-type": {
+            borderTopLeftRadius: 2,
+            borderBottomLeftRadius: 2,
+          },
+          "&:last-of-type": {
+            borderTopRightRadius: 2,
+            borderBottomRightRadius: 2,
+          },
+        },
+      }}
+    >
+      {options.map(option => (
+        <ToggleButton
+          key={option.value}
+          value={option.value}
+          aria-label={option.label.toLowerCase()}
+          sx={{
+            "&.Mui-selected, &.Mui-selected:hover": {
+              color: "#fff",
+              backgroundColor: option.color || "#ccc",
+              borderColor: option.color || "#ccc",
+            },
+            width: `${100 / options.length}%`,
+            borderColor: "#E5E7EB",
+          }}
+        >
+          {option.label}
+        </ToggleButton>
+      ))}
     </ToggleButtonGroup>
   );
 };
