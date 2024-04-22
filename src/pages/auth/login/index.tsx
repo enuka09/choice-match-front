@@ -102,14 +102,16 @@ const UserLogin = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
         "; path=/";
 
       document.cookie = cookieValue;
+      localStorage.setItem("Gender", response.data.gender);
       console.log("Login Successful", response.data);
 
       setEmail("");
       setPassword("");
       if (response.data.isAdmin === "true") {
-        window.location.href = Routes.VIEW_PRODUCTS;
+        window.location.href = Routes.ADMIN_DASHBOARD;
       } else {
-        window.location.href = Routes.ROOT;
+        alert("Login Successful");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Login failed:", error);

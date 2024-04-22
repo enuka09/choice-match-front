@@ -1,8 +1,21 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        slideInFromLeft: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        slideInFromRight: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        slideInFromLeft: "slideInFromLeft 0.5s ease-out forwards",
+        slideInFromRight: "slideInFromRight 0.5s ease-out forwards",
+      },
       colors: {
         "primary-100": "#00BBDB",
         "primary-300": "#0099A6",

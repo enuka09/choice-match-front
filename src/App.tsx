@@ -9,6 +9,9 @@ import {
   CheckoutBilling,
   Competition,
   CompetitionSubmission,
+  SelectionBasedRecommendations,
+  PromptBasedRecommendations,
+  Auth,
   ViewProducts,
   CreateProduct,
   CategoryContent,
@@ -19,7 +22,9 @@ import {
   CreateBrand,
 } from "./pages";
 import { useEffect, useState } from "react";
-import HashLoader from "react-spinners/HashLoader";
+import Lottie from "react-lottie";
+import loader from "./assests/other/default_loader.json";
+import ProtectedRoute from "./components/molecules/ProtectedRoute";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -32,18 +37,20 @@ const App = () => {
 
   return (
     <>
-      <BrowserRouter>
-        {loading ? (
-          <div className="spinner-overlay">
-            <HashLoader
-              color={"#00BBDB"}
-              loading={loading}
-              size={80}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          </div>
-        ) : (
+      {loading ? (
+        <div className="spinner-overlay">
+          <Lottie
+            options={{
+              animationData: loader,
+              loop: true,
+              autoplay: true,
+            }}
+            height={180}
+            width={180}
+          />
+        </div>
+      ) : (
+        <BrowserRouter>
           <div>
             <ScrollToTop />
             <CartProvider>
@@ -54,7 +61,23 @@ const App = () => {
                     <Route index element={<Home />} />
                     <Route path={AppRoutes.COMPETITION} element={<Competition />} />
                     <Route path={AppRoutes.COMPETITION_SUBMISSION} element={<CompetitionSubmission />} />
-
+                    {/* <Route path={AppRoutes.FASHION_RECOMMENDER} element={<SelectionBasedRecommendations />} /> */}
+                    <Route
+                      path={AppRoutes.SELECTION_FASHION_RECOMMENDER}
+                      element={
+                        <ProtectedRoute>
+                          <SelectionBasedRecommendations />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path={AppRoutes.PROMPT_FASHION_RECOMMENDER}
+                      element={
+                        <ProtectedRoute>
+                          <PromptBasedRecommendations />
+                        </ProtectedRoute>
+                      }
+                    />
                     {/* Admin Routes */}
                     <Route path={AppRoutes.ADMIN_DASHBOARD} element={<span>Admin Dashboard</span>} />
                     <Route path={AppRoutes.VIEW_PRODUCTS} element={<ViewProducts />} />
@@ -68,6 +91,17 @@ const App = () => {
 
                     <Route path="*" element={<Navigate to={AppRoutes.ROOT} />} />
                   </Route>
+                  <Route
+                    path={AppRoutes.AUTH}
+                    element={
+                      <ProtectedRoute>
+                        <div className="auth">
+                          <Auth />
+                        </div>
+                      </ProtectedRoute>
+                    }
+                  />
+
                   <Route path={`${AppRoutes.CHECKOUT_SHIPPING}/:orderId`} element={<CheckoutShipping />} />
                   <Route path={`${AppRoutes.CHECKOUT_BILLING}/:orderId`} element={<CheckoutBilling />} />
                   <Route path={`${AppRoutes.MESSAGE}/:orderId`} element={<MessageCard />} />
@@ -75,8 +109,8 @@ const App = () => {
               </CheckoutProvider>
             </CartProvider>
           </div>
-        )}
-      </BrowserRouter>
+        </BrowserRouter>
+      )}
     </>
   );
 };

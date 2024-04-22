@@ -7,6 +7,7 @@ import * as styles from "../styles";
 import signupAnimation from "../../../assests/auth/signup.json";
 import AxiosInstance from "../../../config/axiosInstance";
 import { ThemedToggleButton } from "../../../components/atoms/ToggleSwitch";
+// import UserLogin from "../login";
 
 interface ErrorState {
   fullName?: string;
@@ -27,6 +28,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
   const [isDateInput, setIsDateInput] = useState(false);
   const [errors, setErrors] = useState<ErrorState>({});
   const [isLoading, setIsLoading] = useState(false);
+  // const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   useEffect(() => {
     setIsSignupDrawerOpen(openSignup);
@@ -124,8 +126,13 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
     } finally {
       setIsLoading(false);
       onClose();
+      // setIsLoginOpen(true);
     }
   };
+
+  // const handleCloseLogin = () => {
+  //   setIsLoginOpen(false);
+  // };
 
   return (
     <>
@@ -245,6 +252,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
           </div>
         </div>
       </Drawer>
+      {/* <UserLogin open={isLoginOpen} onClose={handleCloseLogin} /> */}
     </>
   );
 };

@@ -24,6 +24,22 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #00375c;
+  background: #f8f9fa;
   z-index: 1000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fashion-image {
+  animation: fadeIn 1s ease-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

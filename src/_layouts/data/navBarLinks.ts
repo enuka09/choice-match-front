@@ -7,37 +7,37 @@ export const headerLinks: IMainMenu[] = [
   },
   {
     title: "Women",
-    navigation: "/",
+    navigation: "/women",
     subLinks: [
       {
         title: "Casual Wear",
-        navigation: "/",
+        navigation: "/women/casual-wear",
       },
       {
         title: "Formal Wear",
-        navigation: "/",
+        navigation: "/women/formal-wear",
       },
       {
         title: "Ethnic Wear",
-        navigation: "/",
+        navigation: "/women/ethnic-wear",
       },
     ],
   },
   {
     title: "Men",
-    navigation: "/",
+    navigation: "/men",
     subLinks: [
       {
         title: "Casual Wear",
-        navigation: "/",
+        navigation: "/men/casual-wear",
       },
       {
         title: "Formal Wear",
-        navigation: "/",
+        navigation: "/men/formal-wear",
       },
       {
         title: "Footwear",
-        navigation: "/",
+        navigation: "/men/footwear",
       },
     ],
   },

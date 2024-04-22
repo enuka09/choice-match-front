@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField, Select, FormControl, InputLabel, SelectChangeEvent } from "@mui/material";
 
 interface ThemedSelectFieldProps {
   name: string;
@@ -10,7 +10,7 @@ interface ThemedSelectFieldProps {
   disabled?: boolean;
 }
 
-const ThemedSelectField: React.FC<ThemedSelectFieldProps> = ({ name, value, onChange, label, options }) => {
+export const ThemedSelectField: React.FC<ThemedSelectFieldProps> = ({ name, value, onChange, label, options }) => {
   return (
     <TextField
       select
@@ -50,4 +50,57 @@ const ThemedSelectField: React.FC<ThemedSelectFieldProps> = ({ name, value, onCh
   );
 };
 
-export default ThemedSelectField;
+// Custom DropDown Select
+
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface CustomSelectProps {
+  label: string;
+  value: string;
+  onChange: (event: SelectChangeEvent<string>) => void;
+  options: Option[];
+  name: string;
+}
+
+export const CustomSelect: React.FC<CustomSelectProps> = ({ label, value, onChange, options, name }) => {
+  return (
+    <FormControl
+      fullWidth
+      sx={{
+        "& .MuiOutlinedInput-root": {
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#00BBDB !important",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#00375C !important",
+          },
+        },
+        "& .MuiInputLabel-root": {
+          color: "#00375C",
+        },
+        "& .MuiInputBase-input": {
+          color: "#00375C",
+        },
+      }}
+    >
+      <InputLabel id={`${name}-label`}>{label}</InputLabel>
+      <Select
+        labelId={`${name}-label`}
+        id={`${name}-select`}
+        value={value}
+        onChange={onChange}
+        label={label}
+        name={name}
+      >
+        {options.map(option => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+};
