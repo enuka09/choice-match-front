@@ -107,7 +107,7 @@ const Header: React.FC = () => {
             <button className={styles.mainHeader.icon} title="Wishlist">
               <FavoriteBorderOutlined />
             </button>
-            <button className={styles.mainHeader.icon} title="Profile" onClick={handleLoginClick}>
+            <button id="loginButton" className={styles.mainHeader.icon} title="Profile" onClick={handleLoginClick}>
               <PersonOutlineOutlined />
             </button>
             <button className={styles.mainHeader.trackOrderBtn}>Track My Order</button>
@@ -219,7 +219,7 @@ const Header: React.FC = () => {
           <button className="mx-2">
             <SearchRounded />
           </button>
-          <button onClick={handleLoginClick}>
+          <button id="loginButton" onClick={handleLoginClick}>
             <PersonRounded />
           </button>
           <button className={styles.bottomNavbarMobile.homeBtnContainer} onClick={Home}>

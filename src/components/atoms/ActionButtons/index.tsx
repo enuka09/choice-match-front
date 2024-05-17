@@ -3,8 +3,8 @@ import { Visibility, Edit, Delete } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 interface ActionButtonsProps {
-  onView?: () => void; // Make onView optional
-  onEdit: () => void;
+  onView?: () => void;
+  onEdit?: () => void;
   onDelete: () => void;
 }
 

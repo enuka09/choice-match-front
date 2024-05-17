@@ -9,6 +9,11 @@ export { default as PromptBasedRecommendations } from "./fashionRecommendation/p
 export { default as Auth } from "./fashionRecommendation";
 
 // Admin
+export { default as AdminDashboard } from "./admin";
+
+export { default as ViewUsers } from "./admin/users";
+export { default as UserContent } from "./admin/users/userDetails";
+
 export { default as ViewProducts } from "./admin/products/viewProducts";
 export { default as ProductContent } from "./admin/products/productDetails";
 export { default as CreateProduct } from "./admin/products/addProduct";

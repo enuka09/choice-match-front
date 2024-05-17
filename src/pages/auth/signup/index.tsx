@@ -172,6 +172,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                 </p>
                 <form className="mt-4" onSubmit={handleSignup}>
                   <input
+                    id="fullName"
                     type="text"
                     className={`${theme.form.input} ${styles.form.input}`}
                     placeholder="Full Name"
@@ -179,6 +180,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                     onChange={e => setFullName(e.target.value)}
                   />
                   <input
+                    id="email"
                     type="email"
                     className={`${theme.form.input} ${styles.form.input} mt-4`}
                     placeholder="Email"
@@ -186,6 +188,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                     onChange={e => setEmail(e.target.value)}
                   />
                   <input
+                    id="password"
                     type="password"
                     className={`${theme.form.input} ${styles.form.input} mt-4`}
                     placeholder="Password"
@@ -193,6 +196,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                     onChange={e => setPassword(e.target.value)}
                   />
                   <input
+                    id="confirmPassword"
                     type="password"
                     className={`${theme.form.input} ${styles.form.input} mt-4`}
                     placeholder="Confirm Password"
@@ -204,6 +208,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                   )}
                   <ThemedToggleButton gender={gender} onChange={handleGenderChange} />
                   <input
+                    id="phone"
                     type="text"
                     className={`${theme.form.input} ${styles.form.input} mt-4`}
                     placeholder="Phone"
@@ -221,6 +226,7 @@ const UserSignup = ({ openSignup, onClose }: { openSignup: boolean; onClose: () 
                     />
                   ) : (
                     <input
+                      id="dob"
                       type="text"
                       placeholder="Date of Birth"
                       className={`${theme.form.input} ${styles.form.input} mt-4`}

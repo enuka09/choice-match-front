@@ -12,6 +12,7 @@ import {
   SelectionBasedRecommendations,
   PromptBasedRecommendations,
   Auth,
+  AdminDashboard,
   ViewProducts,
   CreateProduct,
   CategoryContent,
@@ -20,6 +21,7 @@ import {
   CreateSubCategory,
   BrandContent,
   CreateBrand,
+  ViewUsers,
 } from "./pages";
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
@@ -79,7 +81,8 @@ const App = () => {
                       }
                     />
                     {/* Admin Routes */}
-                    <Route path={AppRoutes.ADMIN_DASHBOARD} element={<span>Admin Dashboard</span>} />
+                    <Route path={AppRoutes.ADMIN_DASHBOARD} element={<AdminDashboard />} />
+                    <Route path={AppRoutes.VIEW_USERS} element={<ViewUsers />} />
                     <Route path={AppRoutes.VIEW_PRODUCTS} element={<ViewProducts />} />
                     <Route path={AppRoutes.CREATE_PRODUCT} element={<CreateProduct />} />
                     <Route path={AppRoutes.CATEGORY_CONTENT} element={<CategoryContent />} />

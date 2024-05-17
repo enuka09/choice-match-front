@@ -11,6 +11,7 @@ export enum Routes {
   AUTH = "/fashion-recommender/auth",
 
   ADMIN_DASHBOARD = "/admin-dashboard",
+  VIEW_USERS = "/admin-dashboard/users",
   VIEW_PRODUCTS = "/admin-dashboard/products",
   CREATE_PRODUCT = "/admin-dashboard/products/add",
   CATEGORY_CONTENT = "/admin-dashboard/categories",

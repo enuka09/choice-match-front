@@ -157,6 +157,7 @@ const UserLogin = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
                 </p>
                 <form className="mt-4" onSubmit={handleLogin}>
                   <input
+                    id="loginEmail"
                     type="email"
                     className={`${theme.form.input} ${styles.form.input} mb-4`}
                     placeholder="Email"
@@ -164,6 +165,7 @@ const UserLogin = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
                     onChange={e => setEmail(e.target.value)}
                   />
                   <input
+                    id="loginPassword"
                     type="password"
                     className={`${theme.form.input} ${styles.form.input} mb-1`}
                     placeholder="Password"
@@ -183,12 +185,13 @@ const UserLogin = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
                       Forget Password?
                     </button>
                   </div>
-                  <button type="submit" className={`${theme.form.button} ${styles.form.button}`}>
+                  <button id="loginButton" type="submit" className={`${theme.form.button} ${styles.form.button}`}>
                     Login
                   </button>
                   <div className={styles.form.linkSection}>
                     <p>Don't have an Account?</p>
                     <button
+                      id="signupButton"
                       className={styles.form.link}
                       onClick={e => {
                         e.preventDefault();
